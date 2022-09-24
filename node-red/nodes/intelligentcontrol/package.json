@@ -1,0 +1,31 @@
+{
+  "name": "node-red-contrib-remotelearn-intelligentcontrol",
+  "version": "1.0.0",
+  "description": "Virtual laboratory for learning Intelligent Systems Control.",
+  "node-red": {
+    "nodes": {
+      "lower-case": "lower-case.js",
+      "plot": "plot.js",
+      "transfer-function": "transfer-function.js"
+    }
+  },
+  "scripts": {
+    "maps": "genmaps --sourceRoot /src/ -o html,js",
+    "debug": "genmaps --sourceRoot /src/ -o html && node --nolazy --inspect /usr/local/lib/node_modules/node-red/red.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Virtual",
+    "laboratory",
+    "Intelligent",
+    "Systems",
+    "Control."
+  ],
+  "author": "Ricardo Lima Mariz",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
+    "websocket": "^1.0.34"
+  }
+}

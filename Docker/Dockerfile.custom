@@ -33,6 +33,9 @@ WORKDIR /usr/src/node-red
 
 # Setup SSH known_hosts file
 COPY known_hosts.sh .
+RUN chmod +x known_hosts.sh
+RUN chmod 744 known_hosts.sh
+RUN sed -i -e 's/\r$//' known_hosts.sh
 RUN ./known_hosts.sh /etc/ssh/ssh_known_hosts && rm /usr/src/node-red/known_hosts.sh
 RUN echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> /etc/ssh/ssh_config
 
@@ -45,10 +48,19 @@ COPY scripts/entrypoint.sh .
 FROM base AS build
 
 # Install Build tools
-RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python3 && \
+RUN chmod 744 /tmp/remove_native_gpio.sh
+RUN chmod +x /tmp/remove_native_gpio.sh
+RUN sed -i -e 's/\r$//' /tmp/remove_native_gpio.sh
+#RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python3 && \
+RUN apk add --no-cache --virtual buildtools build-base linux-headers udev && \
     npm install --unsafe-perm --no-update-notifier --no-fund --only=production && \
     /tmp/remove_native_gpio.sh && \
     cp -R node_modules prod_node_modules
+
+RUN set -ex && \
+    apk --no-cache del python3
+#RUN apk update && apk upgrade --available
+#RUN apk add --no-cache python3 py3-pip
 
 #### Stage RELEASE #####################################################################################################
 FROM base AS RELEASE
@@ -75,12 +87,26 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 
 # Chown, install devtools & Clean up
+RUN chmod 744 /tmp/install_devtools.sh
+RUN chmod +x /tmp/install_devtools.sh
+RUN sed -i -e 's/\r$//' /tmp/install_devtools.sh
 RUN chown -R node-red:root /usr/src/node-red && \
     /tmp/install_devtools.sh && \
     rm -r /tmp/*
 
 RUN npm config set cache /data/.npm --global 
 RUN npm config set python `which python3` --global
+
+
+#WebSocket Python Server
+RUN mkdir /usr/src/websocket-server
+#RUN mkdir websocket-server
+#WORKDIR /usr/src/websocket-server
+COPY ./websocket-server/* /usr/src/websocket-server/
+#RUN python3 /usr/src/websocket-server/get-pip.py
+#RUN pip3 install -r /usr/src/websocket-server/requirements.txt
+#COPY ./websocket-server/static/* /usr/src/websocket-server/static/*
+#COPY ./websocket-server/websocket-server.py /websocket-server
 
 USER node-red
 
@@ -100,4 +126,14 @@ EXPOSE 1880
 # HEALTHCHECK CMD curl http://localhost:1880/ || exit 1
 
 # ENTRYPOINT ["npm", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
+RUN sed -i -e 's/\r$//' ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+RUN chmod 744 ./entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]
+
+# Run by supervisord
+# RUN apt-get update && apt-get install -y supervisor
+# RUN mkdir -p /var/log/supervisor
+# COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# CMD ["/usr/bin/supervisord"]

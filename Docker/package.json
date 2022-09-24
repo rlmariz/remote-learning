@@ -1,7 +1,7 @@
 {
     "name": "node-red-docker",
     "version": "3.0.2",
-    "description": "Low-code programming for event-driven applications",
+    "description": "Virtual-lab node-red docker.",
     "homepage": "http://nodered.org",
     "license": "Apache-2.0",
     "repository": {
@@ -11,27 +11,35 @@
     "main": "node_modules/node-red/red/red.js",
     "scripts": {
         "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+        "start:dev": "nodemon --exec 'node node_modules/node-red/red.js --userDir /data'",
+        "node:publish": "cd /usr/src/nodes/ && yalc publish && cd -",
+        "node:update": "cd /data/ && yalc update node-red-contrib-virtuallab && cd -",
         "debug": "node --inspect=0.0.0.0:9229 $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
         "debug_brk": "node --inspect=0.0.0.0:9229 --inspect-brk $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
     },
+    "nodemonConfig": {
+      "ignore": [
+        "/data/*",
+        ".vscode",
+        "/usr/src/nodes/nodes/dist"
+      ],
+      "watch": [
+        "/usr/src/nodes/"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "ext": "js,html"
+    },
     "contributors": [
         {
-            "name": "Dave Conway-Jones"
-        },
-        {
-            "name": "Nick O'Leary"
-        },
-        {
-            "name": "James Thomas"
-        },
-        {
-            "name": "Raymond Mouthaan"
+            "name": "Ricardo Lima"
         }
     ],
     "dependencies": {
         "node-red": "3.0.2"
     },
     "engines": {
-        "node": ">=12"
+        "node": ">=18"
     }
 }

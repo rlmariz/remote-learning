@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Julia Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #logContainer {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="julia-service.png" alt="Julia Servie" width="200" height="100">
+    <h1>Logs</h1>
+    <pre id="logContainer"></pre>
+
+    <script>
+        var ws;
+        window.onload = load;
+
+        function addLog(logText) {
+            var logContainer = document.getElementById("logContainer");
+            logContainer.textContent = logText + "\n" + logContainer.textContent;
+        }
+
+        function load() {
+            ws = addwebsocket("ws");
+            ws.onmessage = function (e) { receiveMessage(e.data) }
+        } // load
+
+
+        function receiveMessage(msgdata) {
+            addLog(msgdata)
+        } // receiveMessage
+
+        function addwebsocket(instancename, subprotocol) {
+            var wsuri = document.URL.replace("http:", "ws:");
+
+            if (typeof subprotocol === "undefined") {
+                ws = new WebSocket(wsuri)
+            } else {
+                ws = new WebSocket(wsuri, subprotocol)
+            } //if
+
+            ws.mynam = instancename;
+
+            ws.onerror = function (e) {
+                addLog("WebSocket " + instancename + ".onerror: Websocket state is now " + e.target.readyState + "-" + readystateDesc[e.target.readyState])
+            }
+
+            ws.onopen = function (e) {
+                addLog("WebSocket " + instancename + ".onopen: Websocket state is now " + e.target.readyState + "-" + readystateDesc[e.target.readyState])
+                sendonws(ws, JSON.stringify({event: 'snm', name: 'logs'}))
+            }
+
+            ws.onclose = function (e) {
+                addLog("WebSocket " + instancename + ".onclose: Reload page to logs.");
+
+            }
+
+            return ws
+        } // addwebsocket
+
+        function sendonws(websocket, msg) {
+            if (websocket.readyState == 1) {
+                websocket.send(msg);
+                return true;
+            } else {
+                alert("WebSocket not ready. Reload page or check server!");
+                return false
+            } // if
+        } // sendonws
+
+        var codeDesc = {
+            1000: "Normal",
+            1001: "Going Away",
+            1002: "Protocol Error",
+            1003: "Unsupported Data",
+            1004: "Reserved",
+            1005: "No Status Recvd- reserved",
+            1006: "Abnormal Closure- reserved",
+            1007: "Invalid frame payload data",
+            1008: "Policy Violation",
+            1009: "Message too big",
+            1010: "Missing Extension",
+            1011: "Internal Error",
+            1012: "Service Restart",
+            1013: "Try Again Later",
+            1014: "Bad Gateway",
+            1015: "TLS Handshake"
+        };
+
+        var readystateDesc = {
+            0: "CONNECTING",
+            1: "OPEN",
+            2: "CLOSING",
+            3: "CLOSED"
+        };
+
+    </script>
+</body>
+
+</html>

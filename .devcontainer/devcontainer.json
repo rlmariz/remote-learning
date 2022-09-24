@@ -1,0 +1,51 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+	"name": "Node-RED & Julia",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-20",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/eitsupi/devcontainer-features/julia:0": {}
+	},
+
+	// Configure tool-specific properties.
+	"customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Set *default* container specific settings.json values on container create.
+      "settings": {},
+      "extensions": [
+        "VisualStudioExptTeam.vscodeintellicode",
+        "rvest.vs-code-prettier-eslint",
+        "dbaeumer.vscode-eslint",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "julialang.language-julia",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+
+  "containerEnv": { 
+    "TZ": "America/Sao_Paulo"
+  },
+
+  "runArgs": ["--name", "remote-learning-dev"],
+
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-node-red-node_modules,target=${containerWorkspaceFolder}/node-red/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-data-node_modules,target=${containerWorkspaceFolder}/node-red/data/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-intelligentcontrol-node_modules,target=${containerWorkspaceFolder}/node-red/nodes/intelligentcontrol/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-labcontrol-node_modules,target=${containerWorkspaceFolder}/node-red/nodes/labcontrol/node_modules,type=volume",    
+    "source=${localWorkspaceFolderBasename}-julia,target=/root/.julia"
+
+  ],
+  "postCreateCommand": "bash .devcontainer/install.sh",
+
+  "workspaceMount": "source=${localWorkspaceFolder},target=/remote-learning,type=bind,consistency=cached",
+  "workspaceFolder": "/remote-learning",
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  "remoteUser": "root"
+}
