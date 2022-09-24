@@ -1,0 +1,150 @@
+using Sockets
+using JSON
+if Sys.iswindows()
+    pipe = "\\\\.\\pipe\\testsocket"
+else
+    pipe = tempname()
+end
+
+using Sockets
+using JSON
+
+pipe = 2812
+
+@async begin
+    server = listen(pipe)
+    while true
+        sock = accept(server)
+        @async while isopen(sock)
+            input = JSON.parse(sock)
+            JSON.print(sock, Dict("data" => rand(input["input"])))
+        end
+    end
+end
+
+
+docker run -p 2812:2812 -it --rm julia
+
+
+clientside = connect(pipe)
+
+for i in 1:10
+    JSON.print(clientside,Dict("input" => i))
+    println(JSON.parse(clientside))
+end
+
+tcs = connect(TCPSockets(;delay=false), IPv4("127.0.0.1"), 2812),
+
+
+-----
+
+import Pkg; Pkg.add("JSON")
+using JSON
+
+using Sockets
+@async begin
+    server = listen(ip"127.0.0.1", 2812)
+    while true
+        sock = accept(server)
+        @async while isopen(sock)
+            input = JSON.parse(sock)
+            JSON.print(sock, Dict("data" => rand(input["input"])))
+        end
+    end
+end
+
+
+# client written in Julia
+using Sockets 
+clientside=connect(ip"127.0.0.1", 2812)
+println(clientside,"abc") 
+println(readline(clientside))
+
+import Pkg; Pkg.add("JSON")
+using Sockets
+using JSON
+clientside=connect(ip"192.168.5.100", 2812)
+for i in 1:10
+    JSON.print(clientside,Dict("input" => i))
+    println(JSON.parse(clientside))
+end
+
+
+----------------------------
+using Pkg
+Pkg.add(name = "SimpleWebsockets", version = "0.1.4")
+using SimpleWebsockets
+
+server = WebsocketServer()
+
+listen(server, :client) do ws   
+    listen(ws, :message) do message
+        try
+            comm = Meta.parse(message)
+            result = Base.eval(@__MODULE__, comm)
+            send(ws, string(result))
+        catch err
+            @error err
+            send(ws, "Could not run command")
+        end
+    end
+end
+function echo(val)
+    return val
+end
+serve(server, 8081)
+
+
+
+
+# server written in Julia
+using Sockets
+@async begin
+    server = listen(ip"127.0.0.1", 2812)
+    while true
+        sock = accept(server)
+        @async while isopen(sock)
+            write(sock, "echo: " * readline(sock) * "\n")
+        end
+    end
+end
+
+# client written in Julia - work ok
+using Sockets 
+clientside=connect(2812)
+println(clientside,"abc") 
+println(readline(clientside))
+
+----------------------------------------------------
+
+using WebSockets
+
+serverWS = WebSockets.ServerWS((req) -> WebSockets.Response(200), (ws_server) -> (writeguarded(ws_server, "Hello"); readguarded(ws_server)))
+
+ta = @async WebSockets.with_logger(WebSocketLogger()) do
+    WebSockets.serve(serverWS, port = 2812)
+end
+
+WebSockets.HTTP.get("http://127.0.0.1:2812")
+HTTP.Messages.Response:
+"""
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+
+"""
+
+julia> WebSockets.open("ws://127.0.0.1:8000") do ws_client
+                  data, success = readguarded(ws_client)
+                  if success
+                      println(stderr, ws_client, " received:", String(data))
+                  end
+              end;
+WebSocket(client, CONNECTED) received:Hello
+
+WARNING: Workqueue inconsistency detected: popfirst!(Workqueue).state != :queued
+
+julia> put!(serverWS.in, "close!")
+"close!"
+
+julia> ta
+Task (done) @0x000000000fc91cd0

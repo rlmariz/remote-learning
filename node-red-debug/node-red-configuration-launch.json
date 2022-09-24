@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnFirstSessionStart",
+      "name": "nodemon+chrome",
+      "request": "launch",
+      "restart": true,
+      "runtimeExecutable": "nodemon",
+      "runtimeArgs": ["--preserve-symlinks", "--experimental-modules", "--config", ".nodemon.json", "--exec", "npm run debug"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "outFiles": ["${workspaceFolder}/src/**/*.js"],
+      "envFile": "${workspaceFolder}/.env",
+      "cwd": "${workspaceFolder}",
+      "skipFiles": ["vendor.js", "red.*.js", "red/*.js", "vendor/*.js", "vendor/*", "red/*", "<node_internals>/**"],
+      "type": "pwa-node",
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "pattern": "Started flows",
+        "name": "Launch Chrome"
+      }
+    },
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "pwa-chrome",
+      "url": "http://localhost:1880",
+      "skipFiles": ["vendor.js", "red.*.js", "red/*.js", "vendor/*.js", "vendor/*", "red/*", "<node_internals>/*"],
+      "smartStep": true,
+      "cwd": "${workspaceFolder}",
+      "disableNetworkCache": true,
+      "internalConsoleOptions": "neverOpen",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/src/**/*.html"],
+      "pathMapping": {
+        "/": "/usr/local/lib/node_modules/node-red/node_modules/@node-red/editor-client/public/",
+        "/debug/view/": "/usr/local/lib/node_modules/node-red/node_modules/@node-red/nodes/core/core/lib/debug/",
+        "/src/": "${workspaceFolder}/src/"
+      },
+      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
+    }
+  ]
+}

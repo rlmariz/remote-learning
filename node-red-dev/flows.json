@@ -1,0 +1,235 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "22c25003768ff6a0",
+        "type": "tab",
+        "label": "Flow 7",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d6607ab5.ccd6e8",
+        "type": "ui_group",
+        "name": "IFrame00",
+        "tab": "eddb36be.1cf578",
+        "order": 1,
+        "disp": true,
+        "width": "20",
+        "collapse": false
+    },
+    {
+        "id": "eddb36be.1cf578",
+        "type": "ui_tab",
+        "name": "IFrame00",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "12ace679e1925ce6",
+        "type": "Transfer Function",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "inputMin": 0,
+        "inputMax": 0,
+        "outputMin": 0,
+        "outputMax": 0,
+        "x": 490,
+        "y": 300,
+        "wires": [
+            [
+                "3016e9ca48d1608c"
+            ]
+        ]
+    },
+    {
+        "id": "daaac367a4bd1141",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 210,
+        "y": 300,
+        "wires": [
+            [
+                "12ace679e1925ce6"
+            ]
+        ]
+    },
+    {
+        "id": "3016e9ca48d1608c",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a56e0b80.447068",
+        "type": "ui_iframe",
+        "z": "f6f2187d.f17ca8",
+        "group": "d6607ab5.ccd6e8",
+        "name": "",
+        "order": 0,
+        "width": "20",
+        "height": "13",
+        "url": "http://127.0.0.1:2812/static/tf-2.png",
+        "origin": "*",
+        "scale": "100",
+        "x": 530,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a58f425.e5ae4c",
+        "type": "open",
+        "z": "22c25003768ff6a0",
+        "name": "",
+        "target": "",
+        "app": "",
+        "wait": false,
+        "urlencode": false,
+        "x": 570,
+        "y": 260,
+        "wires": [
+            [
+                "a018c630.e0c848"
+            ]
+        ]
+    },
+    {
+        "id": "26b5b81b.5db13",
+        "type": "inject",
+        "z": "22c25003768ff6a0",
+        "name": "Open google.com using default browser",
+        "props": [
+            {
+                "p": "target",
+                "v": "https://google.com",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 280,
+        "y": 260,
+        "wires": [
+            [
+                "3a58f425.e5ae4c"
+            ]
+        ]
+    },
+    {
+        "id": "a018c630.e0c848",
+        "type": "debug",
+        "z": "22c25003768ff6a0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f3dcdb06.f800a",
+        "type": "inject",
+        "z": "22c25003768ff6a0",
+        "name": "Open image file",
+        "props": [
+            {
+                "p": "target",
+                "v": "/path/to/image.jpeg",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 360,
+        "y": 340,
+        "wires": [
+            [
+                "3a58f425.e5ae4c"
+            ]
+        ]
+    },
+    {
+        "id": "f55de952.472738",
+        "type": "inject",
+        "z": "22c25003768ff6a0",
+        "name": "Open google.com using Chrome",
+        "props": [
+            {
+                "p": "target",
+                "v": "https://google.com",
+                "vt": "str"
+            },
+            {
+                "p": "app",
+                "v": "google chrome",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "3a58f425.e5ae4c"
+            ]
+        ]
+    }
+]

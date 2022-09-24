@@ -1,0 +1,23 @@
+{
+    "restartable": "rs",
+    "ignore": [
+      ".git",
+      "node_modules/**/node_modules",
+      "static/"
+    ],
+    "verbose": true,
+    "execMap": {
+      "py": "nodemon --exec python3 ./websocket-server.py"
+    },
+    "events": {
+      "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
+    },
+    "watch": [
+      "test/fixtures/",
+      "test/samples/"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "py,json"
+  }

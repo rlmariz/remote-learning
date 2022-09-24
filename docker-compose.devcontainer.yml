@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  node-red:
+    image: mcr.microsoft.com/devcontainers/javascript-node:0-20
+    container_name: node-red
+    environment:
+      NODE_ENV: development
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./node-red-debug:/node-red:cached
+      - node-red-node_modules:/node-red/node_modules
+      - data-node_modules:/node-red/data/node_modules
+      - intelligentcontrol-node_modules:/node-red/nodes/intelligentcontrol/node_modules
+      - ./julia-service:/julia-service:cached
+      - .:/workspace:cached
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    links:
+      - julia-service
+    depends_on:
+      - julia-service
+
+  julia-service:
+    image: mcr.microsoft.com/devcontainers/base:bullseye
+    container_name: julia-service
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./julia-service:/julia-service:cached
+      - .:/workspace:cached
+    command: /bin/sh -c "while sleep 1000; do :; done"
+
+volumes:
+  node-red-node_modules:
+  data-node_modules:
+  intelligentcontrol-node_modules:

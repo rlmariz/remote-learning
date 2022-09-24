@@ -1,0 +1,70 @@
+FROM mcr.microsoft.com/devcontainers/javascript-node:0-20
+
+ENV TZ=America/Sao_Paulo
+ENV NODE_ENV=production
+
+#USER root
+
+# Set work directory
+#WORKDIR /usr/src/node-red
+
+
+# RUN set -ex && \
+#     apk add --no-cache \
+#         bash \
+#         tzdata \
+#         iputils \
+#         curl \
+#         nano \
+#         git \
+#         openssl \
+#         openssh-client \
+#         ca-certificates && \
+#     mkdir -p /usr/src/node-red /data && \
+#     deluser --remove-home node && \
+#     adduser -h /usr/src/node-red -D -H node-red -u 1000 && \
+#     chown -R node-red:root /data && chmod -R g+rwX /data && \
+#     chown -R node-red:root /usr/src/node-red && chmod -R g+rwX /usr/src/node-red
+
+
+RUN npm install nodemon -g
+
+#WORKDIR /usr/src/app
+
+#RUN chown -R node-red:root /usr/src/app
+#RUN chown -R node-red:root /data && chmod -R g+rwX /dat
+
+# Create app directory
+#RUN mkdir -p /usr/src/app
+#RUN chown -R node-red /usr/src/app
+#RUN chmod -R 777 /usr/src/app
+
+#WORKDIR /usr/src/app
+
+#USER node-red
+
+# Install dependencies
+#COPY package*.json ./
+#RUN npm install
+
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+#USER devcontainer
+
+# Bundle app source
+#COPY . .
+
+# Exports
+EXPOSE 1880
+
+
+#WORKDIR /usr/src/node-red
+#CMD [ "npm", "run", "debug" ]
+
+#docker compose up --force-recreate --build
+#CMD [ "npm", "start" ]
+#ENTRYPOINT ["npm", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
+#ENTRYPOINT ["npm", "start", "--userDir", "/data"]
+#ENTRYPOINT ["npm", "start"]
+#ENTRYPOINT ["./entrypoint.sh"]

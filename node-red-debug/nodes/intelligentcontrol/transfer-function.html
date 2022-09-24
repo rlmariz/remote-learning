@@ -1,0 +1,35 @@
+<script type="text/html" data-template-name="transfer-function">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>    
+
+    <div class="form-row">
+        <label for="node-input-function"><i class="fa fa-pencil"></i> Function</label>
+        <input type="text" id="node-input-function" placeholder="8/(8*s**2+s)">
+    </div>    
+</script>
+
+<script type="text/html" data-help-name="transfer-function">
+    <p>Transfer function H(s) in the Laplace plane.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('transfer-function', {
+        category: 'remote learn',
+        defaults: {
+            name: { value: "" },
+            function: { value: "", required: true }
+        },
+        inputs: 1,
+        outputs: 1,
+        color: '#33c4ff',
+        icon: "transfer-function.svg",
+        label: function () {
+            return this.name || this.function || "transfer function";
+        },
+        paletteLabel: function () {
+            return "transfer function";
+        }
+    });  
+</script>

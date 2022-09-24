@@ -1,0 +1,8 @@
+sudo lsof -n -i :2812 | grep LISTEN
+kill -9 PID
+
+kill -9 $(lsof -t -i:2812)
+
+include("websocket-server.jl")
+
+sudo lsof -n -i julia | grep LISTEN

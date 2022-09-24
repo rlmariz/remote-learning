@@ -20,7 +20,8 @@
       "sensor": "sensor.js",
       "tanque": "tanque.js",
       "pidcontrol": "pidcontrol.js",
-      "atuador": "atuador.js"
+      "atuador": "atuador.js",
+      "transferfunction": "transferfunction.js"
     }
   },
   "dependencies": {

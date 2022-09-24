@@ -1,6 +1,6 @@
 ARG ARCH=amd64
-ARG NODE_VERSION=16
-ARG OS=buster-slim
+ARG NODE_VERSION=18
+ARG OS=bullseye
 
 #### Stage BASE ########################################################################################################
 FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
@@ -46,7 +46,7 @@ COPY scripts/entrypoint.sh .
 FROM base AS build
 
 # Install Build tools
-RUN apt-get update && apt-get install -y build-essential python && \
+RUN apt-get update && apt-get install -y build-essential python3 python3-pip && \
     npm install --unsafe-perm --no-update-notifier --no-fund --only=production && \
     npm uninstall node-red-node-gpio && \
     cp -R node_modules prod_node_modules
@@ -77,11 +77,22 @@ COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 
 # Chown, install devtools & Clean up
 RUN chown -R node-red:root /usr/src/node-red && \
-    apt-get update && apt-get install -y build-essential python-dev python3 && \
+    apt-get update && apt-get install -y build-essential python-dev python3 python3-pip && \
     rm -r /tmp/*
 
 RUN npm config set cache /data/.npm --global
 RUN npm config set python `which python3` --global
+
+#WebSocket Python Server
+RUN mkdir /usr/src/websocket-server
+#RUN mkdir websocket-server
+#WORKDIR /usr/src/websocket-server
+#COPY ./websocket-server/* /usr/src/websocket-server/
+COPY ./websocket-server/. /usr/src/websocket-server/
+#RUN python3 /usr/src/websocket-server/get-pip.py
+RUN pip3 install -r /usr/src/websocket-server/requirements.txt
+#COPY ./websocket-server/static/* /usr/src/websocket-server/static/*
+#COPY ./websocket-server/websocket-server.py /websocket-server
 
 USER node-red
 
@@ -96,8 +107,11 @@ ENV NODE_RED_VERSION=$NODE_RED_VERSION \
 
 # Expose the listening port of node-red
 EXPOSE 1880
+EXPOSE 2812
 
 # Add a healthcheck (default every 30 secs)
 # HEALTHCHECK CMD curl http://localhost:1880/ || exit 1
 
+RUN chmod +x ./entrypoint.sh
+RUN chmod 744 ./entrypoint.sh
 ENTRYPOINT ["./entrypoint.sh"]

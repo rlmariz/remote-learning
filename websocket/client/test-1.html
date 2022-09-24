@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title>Websockets are awesome</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input {
+            margin: 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit='event.preventDefault(); sendcommand();'>
+        <label>Enter a Julia command:</label><br>
+        <input
+            type='text'
+            placeholder='eg. 1+1 or echo("hellooooo..")'
+            id='command'
+        />
+        <span id='result'></span><br>
+        <input type='submit' value = 'Send command'>
+    </form>
+    <script>
+        input = document.getElementById('command');
+        result = document.getElementById('result');
+        const WebSocket = require('ws');
+        const ws = new WebSocket('ws://192.168.5.100:8081')
+        ws.addEventListener('message', message => {
+            result.innerHTML = ` = ${message.data}`
+        })
+        function sendcommand(){
+            ws.send(input.value)
+        }
+    </script>
+</body>
+</html>

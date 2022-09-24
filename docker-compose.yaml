@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./Docker    
+    # image: rlmariz/virtual-lab:dev
+    container_name: virtual-lab-dev
+    hostname: virtual_lab_dev
+    restart: unless-stopped
+    command: npm install nodemon
+    environment:
+      - TZ=America/Sao_Paulo    
+    #entrypoint: ./Docker/scripts/entrypoint-dev.sh
+    entrypoint: /usr/src/node-red/entrypoint-dev.sh
+    ports:
+      - 1880:1880
+      - 2812:2812
+    volumes:
+      - ./websocket-server/:/usr/src/websocket-server/
+      - ./Docker/scripts/entrypoint-dev.sh:/usr/src/node-red/entrypoint-dev.sh
+      - ./Docker/scripts/nodemon.json:/usr/src/node-red/nodemon.json
+      - ./Docker/package.json:/usr/src/node-red/package.json
+      - ./nodes:/usr/src/nodes
+      - ./node-red-dev:/data
+      
+    # extra_hosts: 
+    #   - 'host.docker.interndoal:172.17.0.1'

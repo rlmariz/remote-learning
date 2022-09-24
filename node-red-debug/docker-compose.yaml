@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  node-red:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: node-red
+    environment:
+      NODE_ENV: development
+    volumes:
+      # - ./nodes:/usr/src/node-red/nodes
+      # - ./package.json:/usr/src/node-red/package.json
+      # - ./nodemon.json:/usr/src/node-red/nodemon.json
+      # - ./node_red_data:/data
+      # - ./nodes/intelligentcontrol:/node-red/data/node_modules/red-contrib-remotelearn-intelligentcontrol
+      - .:/node-red:cached
+      - node-red-node_modules:/node-red/node_modules
+      - data-node_modules:/node-red/data/node_modules
+      - intelligentcontrol-node_modules:/node-red/nodes/intelligentcontrol/node_modules
+    command: /bin/sh -c "while sleep 1000; do :; done"
+      # - ./entrypoint.sh:/usr/src/node-red/entrypoint.sh
+    # ports:
+    #   - 1880:1880
+    #   - 9229:9229
+    #command: [ "npm", "start" ]
+    # entrypoint:
+      # [
+      #   "sh",
+      #   "-c",
+      #   "npm install ./nodes/intelligentcontrol/",
+      #   "&&",
+      #   "npm",
+      #   "start"
+      # ]
+    #entrypoint: ["npm", "start"]
+volumes:
+  node-red-node_modules:  
+  data-node_modules:
+  intelligentcontrol-node_modules:

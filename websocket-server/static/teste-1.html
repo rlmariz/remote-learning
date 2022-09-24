@@ -1,0 +1,140 @@
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+    <script>
+
+        var host = 'http://127.0.0.1:2812';
+
+        var sio = io(host, {
+            transportOptions: {
+                polling: {
+                    extraHeaders: {
+                        'X-Username': 'ui'
+                    }
+                }
+            }
+        });
+
+        sio.on('connect', () => {
+            console.log('connected');
+        });
+
+        sio.on('plot', (data) => {
+            console.log(data);
+
+            Plotly.extendTraces("graph", {y: [[data.y]]}, [0])            
+
+        });
+
+        function refreshIFrame() {
+            var date = new Date();
+            document.getElementById("id1").innerHTML = date.toString();
+            //var x = document.getElementById("iFrameDemo*");
+            //document.getElementById('iFrameDemo').contentWindow.location.reload(true);
+
+            //document.getElementById('iFrameDemo').contentWindow.postMessage("refresh");
+
+            try {
+                // Do something that might trigger an error
+                //document.getElementById('iFrameDemo').contentWindow.location.reload(true)                
+                //var iFrame = document.getElementById("iFrameDemo*");
+                //iFrame.parentNode.replaceChild(iFrame.cloneNode(), iFrame);
+                //parent.frames['iFrameDemo'].location.href = "fig.html";
+            } catch (error) {
+                // Only runs when there is an error/exception
+            } finally {
+                // Code here always runs. Doesn't matter if there was an error or not.
+            }
+
+
+            //x.contentWindow.location.reload();
+            var t = setTimeout(refreshIFrame, 1000);
+
+            // setTimeout(function () {
+            //     refreshIFrame();
+            // }, 500);
+
+        }
+
+        // setTimeout(function(){
+        //     var date = new Date();
+        //     document.getElementById("id1").innerHTML = date.toString();
+        // }, 1000);
+
+    </script>
+
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body onload="refreshIFrame()">
+    <!-- <iframe id="iFrame" src="fig.html"></iframe> -->
+    <div id="id1">Update Grafico</div>
+
+    <div id="graph"></div>
+
+
+    <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'London')">London</button>
+        <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+        <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+      </div>
+      
+      <!-- Tab content -->
+      <div id="London" class="tabcontent">
+        <h3>London</h3>
+        <p>London is the capital city of England.</p>
+      </div>
+      
+      <div id="Paris" class="tabcontent">
+        <h3>Paris</h3>
+        <p>Paris is the capital of France.</p>
+      </div>
+      
+      <div id="Tokyo" class="tabcontent">
+        <h3>Tokyo</h3>
+        <p>Tokyo is the capital of Japan.</p>
+      </div>
+    
+
+    <!-- <iframe id="iFrameDemo" src="./fig.html" frameborder="0"
+        style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0%;left:0px;right:0px;bottom:0px"
+        height="100%" width="100%">
+    </iframe> -->
+
+    <script>
+
+        function rand() {
+            return Math.random();
+        }
+
+        // Plotly.plot('graph', [{
+        //     y: [1, 2, 3].map(rand),
+        //     mode: 'lines',
+        //     line: { color: '#80CAF6' }
+        // }]);
+
+        
+        Plotly.plot('graph', [{
+            y: [],            
+            mode: 'lines',
+            line: { color: '#80CAF6' }
+        }]);        
+
+        var cnt = 0;
+
+        // var interval = setInterval(function () {
+
+        //     Plotly.extendTraces('graph', {
+        //         y: [[rand()]]
+        //     }, [0])
+
+        //     if (cnt === 100) clearInterval(interval);
+        // }, 300);
+
+    </script>
+
+
+
+</body>

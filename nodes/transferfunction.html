@@ -1,0 +1,47 @@
+<script type="text/html" data-template-name="Transfer Function">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>    
+
+    <div class="form-row">
+        <label for="node-input-inputMin"><i class="fa fa-caret-square-o-right"></i> <span>Input Range</span></label>
+        <input type="number" id="node-input-inputMin" min="0" value="0" step="any" placeholder="Min" style="text-align:end; width:100px !important">
+        <span> - </span>
+        <input type="number" id="node-input-inputMax" min="0" value="0" step="any" placeholder="Max" style="text-align:end; width:100px !important">        
+    </div>    
+
+    <div class="form-row">
+        <label for="node-input-outputMin"><i class="fa fa-caret-square-o-left"></i> <span>Output Range</span></label>
+        <input type="number" id="node-input-outputMin" min="0" value="0" step="any" placeholder="Min" style="text-align:end; width:100px !important">
+        <span> - </span>
+        <input type="number" id="node-input-outputMax" min="0" value="0" step="any" placeholder="Max" style="text-align:end; width:100px !important">        
+    </div>    
+</script>
+
+<script type="text/html" data-help-name="sensor">
+    <p>Simulação de um sensor genérico com um range de entrada e um de saída.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('Transfer Function',{
+        category: 'virtual_lab',
+        defaults: {
+            name: {value:""},
+            inputMin: {value:0, required:true},
+            inputMax: {value:0, required:true},
+            outputMin: {value:0, required:true},
+            outputMax: {value:0, required:true}
+        },
+        inputs:1,
+        outputs:1,
+        color: '#a6bbcf',        
+        icon: "sensor.png",
+        label: function() {
+            return this.name||"Transfer Function";
+        },
+        paletteLabel: function() {
+            return "Transfer Function";
+        }
+    });  
+</script>

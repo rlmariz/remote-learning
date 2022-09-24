@@ -1,0 +1,39 @@
+{
+  "name": "node-red-develop",
+  "version": "0.20.5",
+  "description": "Test environment for developing Node-RED flows",
+  "main": "node_modules/node-red/red.js",
+  "scripts": {
+    "start": "nodemon node_modules/node-red/red.js --userDir ./data",
+    "inspect": "node --inspect node_modules/node-red/red.js --userDir ./data",
+    "update": "npm install --unsafe-perm --production node-red",
+    "check": "npm outdated",
+    "check-data": "cd data && npm outdated",
+    "update-data": "cd data && npm update",
+    "check-master": "npm outdated",
+    "update-master": "npm update",
+    "admin": "node node_modules/node-red-admin/node-red-admin.js",
+    "adminui": "start http://localhost:1880/red/",
+    "ui": "start http://localhost:1880/ui/",
+    "log": "sudo journalctl -u nrlive -f -n 0 -o cat"
+  },
+  "keywords": [
+    "node-red"
+  ],
+  "author": "Ricardo Lima Mariz",
+  "license": "ISC",
+  "dependencies": {
+    "node-red": "^3.0.2",
+    "node-red-admin": "^3.0.0"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "maintained node versions",
+    "last 2 versions",
+    "not dead",
+    "not ie < 11"
+  ],
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
