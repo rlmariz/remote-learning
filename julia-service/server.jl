@@ -23,16 +23,16 @@ const USERNAMES = Dict{String,WebSocket}()
 const HTMLSTRING = read(joinpath(@__DIR__, "chat_explore.html"), String)
 
 
-@info """
-A chat server application. For each browser (tab) that connects,
-an 'asyncronous function' aka 'coroutine' aka 'task' is started.
+# @info """
+# A chat server application. For each browser (tab) that connects,
+# an 'asyncronous function' aka 'coroutine' aka 'task' is started.
 
-To use:
-    - include("chat_explore.jl") in REPL
-    - start a browser on the local ip address, e.g.: http://192.168.0.4:8080
-    - inspect global variables starting with 'LAST' while the chat is running asyncronously 
+# To use:
+#     - include("chat_explore.jl") in REPL
+#     - start a browser on the local ip address, e.g.: http://192.168.0.4:8080
+#     - inspect global variables starting with 'LAST' while the chat is running asyncronously 
 
-"""
+# """
 
 # Since we are to access a websocket from outside
 # it's own websocket handler coroutine, we need some kind of
@@ -62,7 +62,7 @@ function coroutine(thisws)
 
         global LASTMSG = msg = String(data)
 
-        @info Received = msg
+        # @info Received = msg
 
         startswith(msg, "exit") && break
 
@@ -72,8 +72,9 @@ function coroutine(thisws)
                 local time, value, msgtype = process_message(infolab, msg)
                 # if ("$value" != "")
                 if msgtype == "tfc"
+                    #@info value = value
                     writeguarded(thisws, "$value")
-                    notifyplot(infolab.name, time, value)                
+                    # notifyplot(infolab.name, time, value)                
                 end
             end
 

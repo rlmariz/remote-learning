@@ -12,7 +12,11 @@ module.exports = function (RED) {
 
         node.function = n.function;
 
-        node.time = 0;
+        node.time = 0.0;
+        node.stepsize = 0.1;
+        node.socketConnected = false;
+
+        this.status({ fill: "red", shape: "ring", text: "disconnected" });
 
         var tf = {
             name: 'tf-' + node.id,
@@ -66,21 +70,26 @@ module.exports = function (RED) {
             node.status({ fill: "green", shape: "dot", text: "connected" });
             node.sendonws(`tfs:${node.function}`)
             //node.sendonws(`tfn:${node.id}`)
+            node.socketConnected = true;
             node.sendonws(`tfn:${"Teste"}`)
         }
 
         node.ws.onclose = function (e) {
             node.log(`WebSocket onclose: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
             node.status({ fill: "red", shape: "ring", text: "disconnected" });
+            node.socketConnected = true;
         }
 
         node.ws.onmessage = function (e) {
-            node.log(`WebSocket message: ${e.data}`);
-            node.send({
-                payload: parseFloat(e.data),
-                time: node.time,
-                label: node.name || node.function || node.id
-            });
+            //console.log(e)
+            if (e !== undefined && e.data !== undefined) {
+                node.log(`Calc: ${node.time} - ${e.data}`);
+                node.send({
+                    payload: parseFloat(e.data),
+                    time: node.time,
+                    label: node.name || node.function || node.id
+                });
+            }
         }
 
         node.sendonws = function (msg) {
@@ -97,15 +106,17 @@ module.exports = function (RED) {
         // node.warn("*** warn ***");
         // node.error("*** error ***");
 
-        this.status({ fill: "red", shape: "ring", text: "disconnected" });
-
         node.on('input', function (msg) {
-            let valueInput = msg.payload;
 
-            msg.payload = valueInput;
-            msg.label = node.name;
+            if (node.time < 30 && node.socketConnected){
+                let valueInput = msg.payload;
 
-            node.sendonws(`tfc:${node.time++}`)
+                msg.payload = valueInput;
+                msg.label = node.name;
+                node.sendonws(`tfc:${node.time}`)
+                node.time = parseFloat((node.time + node.stepsize).toFixed(2));                
+            }
+            
         });
     }
 

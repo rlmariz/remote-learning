@@ -36,7 +36,7 @@
   "mounts": [
     "source=${localWorkspaceFolderBasename}-node-red-node_modules,target=${containerWorkspaceFolder}/node-red-debug/node_modules,type=volume",
     "source=${localWorkspaceFolderBasename}-data-node_modules,target=${containerWorkspaceFolder}/node-red-debug/data/node_modules,type=volume",
-    "source=${localWorkspaceFolderBasename}-data-node_modules,target=${containerWorkspaceFolder}/node-red-debug/nodes/intelligentcontrol/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-intelligentcontrol-node_modules,target=${containerWorkspaceFolder}/node-red-debug/nodes/intelligentcontrol/node_modules,type=volume",
     "source=${localWorkspaceFolderBasename}-julia,target=/root/.julia"
 
   ],

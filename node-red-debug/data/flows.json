@@ -114,7 +114,7 @@
                 "p": "payload"
             }
         ],
-        "repeat": "1",
+        "repeat": "0.1",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
@@ -135,6 +135,7 @@
         "id": "99a477e778710b4d",
         "type": "transfer-function",
         "z": "c93c614a599c933f",
+        "d": true,
         "name": "",
         "function": "8 / (8s + 1)",
         "x": 390,
@@ -166,6 +167,7 @@
         "id": "94257585bc058f70",
         "type": "plot",
         "z": "c93c614a599c933f",
+        "d": true,
         "name": "Plot-1",
         "x": 670,
         "y": 240,
@@ -179,6 +181,7 @@
         "id": "10e3e83e176f5a29",
         "type": "transfer-function",
         "z": "c93c614a599c933f",
+        "d": true,
         "name": "",
         "function": "4 / (4s + 1)",
         "x": 390,
@@ -207,7 +210,7 @@
         "type": "transfer-function",
         "z": "c93c614a599c933f",
         "name": "",
-        "function": "9/(s^2 + 100s + 3)",
+        "function": "1/(s^2 + 0.5s + 1)",
         "x": 390,
         "y": 400,
         "wires": [

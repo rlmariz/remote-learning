@@ -2,6 +2,8 @@
 
 #module InfoLabs
 
+#using BigFloat
+
 export process_message
 
 using InverseLaplace
@@ -34,7 +36,7 @@ mutable struct InfoLab
             nothing
         end
 
-        this.CalcValue = function (time::Int)
+        this.CalcValue = function (time::Float32)
             local value = eval(
                 Meta.parse(
                     "InverseLaplace.talbot(s -> (" *
@@ -51,7 +53,18 @@ mutable struct InfoLab
             if isnan(value)
                 value = 0
             end
-            return value
+
+
+            value2 = float(value)
+
+            local num_digits = 4;
+            value2 = round(value2, digits=num_digits)
+
+            #local value2 = setprecision(value, num_digits)
+
+            #value = 1
+
+            return convert(Float32, value2)
         end
 
         this.ReadMessage = function (message::String)
@@ -64,9 +77,9 @@ end
 
 function process_message(infolab::InfoLab, message::String)
 
-    value = 0;
-    time = 0;
-    msg = "";
+    value ::  Float32 = 0;
+    time :: Float32 = 0;
+    msg :: String = "";
 
     if startswith(message, "tfs:")
         try
@@ -90,7 +103,8 @@ function process_message(infolab::InfoLab, message::String)
     if startswith(message, "tfc:")
         try
             msg = "tfc";
-            time = parse(Int, message[length("tfc:")+1:end])
+            time = parse(Float32, message[length("tfc:")+1:end])
+            time = round(time, digits=2)
             value = infolab.CalcValue(time)            
             # msg = "$value";
             # send(client, "$value")

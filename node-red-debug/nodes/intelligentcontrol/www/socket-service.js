@@ -11,7 +11,7 @@ function load() {
     }
     
     socket.on('plot', function (data) {
-        console.log(data);
+        //console.log(data);
         plotValue(data)
     });
     
@@ -21,5 +21,10 @@ function load() {
     
     socket.on('connect', function() {
         console.log("Websocket plot conected");
+        socket.io.emit("buffer");
+    })
+
+    socket.on('disconnect', function() {
+        console.log("Websocket disconnect");
     })
 }

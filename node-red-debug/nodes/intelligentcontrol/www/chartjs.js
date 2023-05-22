@@ -2,6 +2,7 @@ var listPlots = {};
 
 function addDataPlant(chart, label, time, value) {
     var datasetPlot = -1;
+
     chart.data.datasets.forEach((value, index) => {
         if (value.label === label){
             datasetPlot = index;    
@@ -17,18 +18,34 @@ function addDataPlant(chart, label, time, value) {
             borderColor: "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0"),
             data: []
         });
+        console.log("****criou chat****")
     }
 
-    if (chart.data.labels.indexOf(time) == -1){
-        chart.data.labels.push(time);
-    }
+    // if (chart.data.labels.indexOf(time) == -1){
+    //     console.log(time);
+    //     chart.data.labels.push(time);
+    // }
+
+    while( chart.data.labels.length > 0 && chart.data.labels[0] >= time ) {
+        chart.data.labels.shift();
+        chart.data.datasets[datasetPlot].data.shift();
+    }    
     
-    chart.data.datasets[datasetPlot].data.push(value);
-    chart.update();
+    if (chart.data !== undefined){
+        chart.data.labels.push(time);
+        chart.data.datasets[datasetPlot].data.push(value);    
+
+        chart.update();        
+
+        //console.log(`data: ${chart.data.datasets[datasetPlot].data.length} - label: ${chart.data.labels.length}`)        
+    }
 }
 
-function addData(chart, dataset, data) {
+function addData(chart, dataset, data) {    
     chart.data.datasets[dataset].data.push(data);
+    while( chart.data.datasets[dataset].data.length > 60 ) {
+        chart.data.datasets[dataset].data.shift();
+    }
     chart.update();
 }
 
@@ -46,16 +63,16 @@ function createChart(ctx){
         data: {
             labels: [],
             datasets: [],            
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
+        }//,
+        // options: {
+        //     scales: {
+        //         yAxes: [{
+        //             ticks: {
+        //                 beginAtZero: true
+        //             }
+        //         }]
+        //     }
+        // }
     });
 }
 
@@ -67,6 +84,7 @@ function addPlots(){
 
 function addPlot(plotItem){
     let plotArea = document.getElementById('plotarea');
+
     let plotAreaContent = document.getElementById('plotarea-content');
 
     let a = document.createElement('a');
@@ -81,6 +99,8 @@ function addPlot(plotItem){
 
     let canvas = document.createElement('canvas');
     canvas.id = plotItem.name + "-canvas";        
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 100;
 
     let div = document.createElement('div');
     div.className = "tab-pane fade";
@@ -97,7 +117,7 @@ function plotValue(message) {
     //let plotValue = JSON.parse(message)
     let plotValue = message;
 
-    if (listPlots[plotValue.name] == undefined){
+    if (listPlots[plotValue.name] === undefined){
         plotItem = {
             'name': plotValue.name
         }        
