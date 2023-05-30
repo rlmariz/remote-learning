@@ -1,6 +1,6 @@
-let listPlots = [];
-let listUpdates = [];
-let plotColors = [
+var listPlots = [];
+var listUpdates = [];
+const plotColors = [
     'red',
     'green',
     'blue',
@@ -22,10 +22,116 @@ let plotColors = [
     'salmon',
     'lavender'
 ];
-let plotColorIndex = -1;
+
+function getDataSetColor(plotData) {
+    if (listPlots[plotData.id].indexColors < plotColors.length) {
+        listPlots[plotData.id].indexColors++;
+        color = plotColors[listPlots[plotData.id].indexColors]
+    } else {
+        color = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0")
+    }
+    return color;
+}
+
+function getChart(plotData) {
+    if (listPlots[plotData.id] === undefined) {
+        listPlots[plotData.id] = {
+            plot: addPlot(plotData),
+            indexColors: -1
+        }
+        //addPlot(plotData);
+        //indexColors[plotData.id] = -1
+    }
+    return listPlots[plotData.id].plot;
+}
+
+function addDataSet(plotData) {
+    console.log(`Create DataSet: ${JSON.stringify(plotData)}`)
+    const chart = getChart(plotData)
+
+    chart.data.datasets.push({
+        label: plotData.label,
+        lineTension: 0.1,
+        pointRadius: 0,
+        fill: false,
+        borderColor: getDataSetColor(plotData),
+        borderWidth: 1,
+        data: [plotData.value]
+    });
+
+    addLabel(plotData)
+
+    chart.update()
+}
+
+function addLabel(plotData) {
+    const chart = getChart(plotData)
+    const labels = chart.data.labels;
+    const lastTime = labels.slice(-1);
+    if (!labels.includes(plotData.time)) {
+        chart.data.labels.push(plotData.time);
+    }
+
+    if (plotData.time < lastTime) {
+        chart.data.labels.sort(function (a, b) {
+            return a - b;
+        });
+    }
 
 
-function addDataSet(chart) {
+    return;
+
+    if (!labels.includes(plotData.time)) {
+
+        let index = labels.findIndex(function (element) {
+            return plotData.time < element;
+        });
+
+        if (index === -1) {
+            index = labels.length;
+        }
+
+        chart.data.labels.splice(index, 0, plotData.time);
+    }
+}
+
+function RemoveOldData(plotData) {
+    const chart = getChart(plotData)
+    while (chart.data.labels.length > 0 && chart.data.labels[0] >= plotData.time) {
+        chart.data.labels.shift();
+        //chart.data.datasets[datasetPlot].data.shift();
+    }
+}
+
+function addData(plotData) {
+    //console.log(`addData: ${JSON.stringify(plotData)}`)
+    let chart = getChart(plotData)
+    let dataSetIndex = -1;
+
+    chart.data.datasets.forEach((value, index) => {
+        if (value.label === plotData.label) {
+            dataSetIndex = index;
+        }
+    });
+
+    if (dataSetIndex === -1) {
+
+        addDataSet(plotData);
+
+    } else {
+
+        addLabel(plotData)
+        chart.data.datasets[dataSetIndex].data.push(plotData.value)
+
+    }
+
+    //RemoveOldData(plotData)
+}
+
+function updateChartUI() {
+    for (var id in listPlots) {
+        listPlots[id].plot.update()
+    }
 }
 
 async function updateUI() {
@@ -33,126 +139,12 @@ async function updateUI() {
     setInterval(function () {
         while (listUpdates.length > 0) {
 
-            var plotValue = listUpdates.shift();
-
-            if (listPlots[plotValue.name] === undefined) {
-                plotItem = {
-                    'name': plotValue.name
-                }
-                plotItem.chart = addPlot(plotItem);
-                listPlots[plotValue.name] = plotItem;
-            }
-
-            var chart = listPlots[plotValue.name].chart
-            var label = plotValue.label
-            var time = plotValue.time
-            var value = plotValue.value            
-
-            var datasetPlot = -1;
-
-            chart.data.datasets.forEach((value, index) => {
-                if (value.label === label) {
-                    datasetPlot = index;
-                }
-            });
-
-            if (datasetPlot === -1) {
-                if (plotColorIndex < plotColors.length) {
-                    plotColorIndex++;
-                    color = plotColors[plotColorIndex]
-                } else {
-                    color = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0")
-                }
-
-                chart.data.labels.push(time);
-
-                datasetPlot = chart.data.datasets.push({
-                    label: label,
-                    lineTension: 0.1,
-                    pointRadius: 0,
-                    fill: false,
-                    borderColor: color,
-                    borderWidth: 1,
-                    data: [value]
-                });
-
-                chart.update();
-            } else {
-
-                while (chart.data.labels.length > 0 && chart.data.labels[0] >= time) {
-                    chart.data.labels.shift();
-                    chart.data.datasets[datasetPlot].data.shift();
-                }
-
-                if (chart.data !== undefined) {                    
-                    chart.data.datasets[datasetPlot].data.push(value);
-                    chart.data.labels.push(time);
-
-                    chart.update();
-                }
-
-            }
-
+            let plotData = listUpdates.shift();
+            addData(plotData)
         }
-    }, 100);
+        updateChartUI();
+    }, 300);
 
-}
-
-function addDataPlant(chart, label, time, value) {
-    var datasetPlot = -1;
-
-    chart.data.datasets.forEach((value, index) => {
-        if (value.label === label) {
-            datasetPlot = index;
-        }
-    });
-
-    if (datasetPlot === -1) {
-        datasetPlot = chart.data.datasets.push({
-            label: label,
-            lineTension: 0.1,
-            pointRadius: 0,
-            fill: false,
-            borderColor: "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0"),
-            data: []
-        });
-        console.log("****criou chat****")
-    }
-
-    // if (chart.data.labels.indexOf(time) == -1){
-    //     console.log(time);
-    //     chart.data.labels.push(time);
-    // }
-
-    while (chart.data.labels.length > 0 && chart.data.labels[0] >= time) {
-        chart.data.labels.shift();
-        chart.data.datasets[datasetPlot].data.shift();
-    }
-
-    if (chart.data !== undefined) {
-        chart.data.labels.push(time);
-        chart.data.datasets[datasetPlot].data.push(value);
-
-        chart.update();
-
-        //console.log(`data: ${chart.data.datasets[datasetPlot].data.length} - label: ${chart.data.labels.length}`)        
-    }
-}
-
-function addData(chart, dataset, data) {
-    chart.data.datasets[dataset].data.push(data);
-    while (chart.data.datasets[dataset].data.length > 60) {
-        chart.data.datasets[dataset].data.shift();
-    }
-    chart.update();
-}
-
-function removeData(chart) {
-    chart.data.labels = [0];
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data = [0];
-    });
-    chart.update();
 }
 
 function createChart(ctx) {
@@ -173,6 +165,10 @@ function createChart(ctx) {
                     beginAtZero: true
                 }
             }]
+            // ,
+            // x: {
+            //     type: 'linear',
+            // }
         }
     };
 
@@ -186,35 +182,33 @@ function createChart(ctx) {
     });
 }
 
-function addPlots() {
-    listPlots.forEach(function (plotItem) {
-        addPlot(plotItem)
-    });
-}
+function addPlot(plotData) {
+    console.log(`Create Plot: ${JSON.stringify(plotData)}`)
 
-function addPlot(plotItem) {
     let plotArea = document.getElementById('plotarea');
 
     let plotAreaContent = document.getElementById('plotarea-content');
 
+    let plotId = `_${plotData.id}`
+
     let a = document.createElement('a');
-    a.setAttribute('href', '#' + plotItem.name);
+    a.setAttribute('href', '#' + plotId);
     a.className = 'nav-link';
     a.setAttribute('data-bs-toggle', 'tab')
-    a.appendChild(document.createTextNode(plotItem.name));
+    a.appendChild(document.createTextNode(plotData.name));
 
     let li = document.createElement('li');
     li.className = 'nav-item';
     li.appendChild(a);
 
     let canvas = document.createElement('canvas');
-    canvas.id = plotItem.name + "-canvas";
+    canvas.id = plotId + "-canvas";
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight - 100;
 
     let div = document.createElement('div');
     div.className = "tab-pane fade show active";
-    div.id = plotItem.name;
+    div.id = plotId;
     div.appendChild(canvas);
 
     plotArea.appendChild(li);
@@ -224,23 +218,17 @@ function addPlot(plotItem) {
 }
 
 function plotValue(message) {
-    //let plotValue = JSON.parse(message)
 
-    listUpdates.push(message)
+    if (Array.isArray(message)) {
+        message.forEach((value) => {
+            listUpdates.push(value)
+        });
+    } else {
+        listUpdates.push(message)
+    }
 
-    // let plotValue = message;
 
-    // if (listPlots[plotValue.name] === undefined) {
-    //     plotItem = {
-    //         'name': plotValue.name
-    //     }
-    //     plotItem.chart = addPlot(plotItem);
-    //     listPlots[plotValue.name] = plotItem;
-    // }
 
-    // addDataPlant(listPlots[plotValue.name].chart, plotValue.label, plotValue.time, plotValue.value)
 }
-
-//addPlots()
 
 updateUI();

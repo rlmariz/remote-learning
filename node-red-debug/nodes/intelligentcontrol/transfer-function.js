@@ -108,7 +108,7 @@ module.exports = function (RED) {
 
         node.on('input', function (msg) {
 
-            if (node.time < 30 && node.socketConnected){
+            if (node.time < 10 && node.socketConnected){
                 let valueInput = msg.payload;
 
                 msg.payload = valueInput;

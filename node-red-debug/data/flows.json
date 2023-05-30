@@ -126,7 +126,6 @@
         "wires": [
             [
                 "99a477e778710b4d",
-                "10e3e83e176f5a29",
                 "0f7ebb369b607327"
             ]
         ]
@@ -137,7 +136,7 @@
         "z": "c93c614a599c933f",
         "name": "",
         "function": "1 / (s + 1)",
-        "x": 380,
+        "x": 420,
         "y": 180,
         "wires": [
             [
@@ -151,7 +150,7 @@
         "type": "debug",
         "z": "c93c614a599c933f",
         "name": "output h(s)",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -168,8 +167,8 @@
         "type": "plot",
         "z": "c93c614a599c933f",
         "name": "Plot-1",
-        "x": 670,
-        "y": 240,
+        "x": 610,
+        "y": 180,
         "wires": [
             [
                 "f31516dc93619357"
@@ -177,27 +176,13 @@
         ]
     },
     {
-        "id": "10e3e83e176f5a29",
-        "type": "transfer-function",
-        "z": "c93c614a599c933f",
-        "d": true,
-        "name": "",
-        "function": "4 / (4s + 1)",
-        "x": 390,
-        "y": 300,
-        "wires": [
-            [
-                "94257585bc058f70"
-            ]
-        ]
-    },
-    {
         "id": "7a30cfc4d5b46bf7",
         "type": "plot",
         "z": "c93c614a599c933f",
+        "d": true,
         "name": "Plot-2",
-        "x": 670,
-        "y": 400,
+        "x": 610,
+        "y": 380,
         "wires": [
             [
                 "f31516dc93619357"
@@ -211,7 +196,7 @@
         "name": "",
         "function": "1/(s^2 + 0.5s + 1)",
         "x": 390,
-        "y": 400,
+        "y": 380,
         "wires": [
             [
                 "7a30cfc4d5b46bf7",
@@ -224,8 +209,8 @@
         "type": "plot",
         "z": "c93c614a599c933f",
         "name": "Plot-3",
-        "x": 630,
-        "y": 160,
+        "x": 610,
+        "y": 280,
         "wires": [
             []
         ]
