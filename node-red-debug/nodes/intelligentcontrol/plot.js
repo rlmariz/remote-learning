@@ -5,15 +5,6 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         var node = this;
         
-        node.plot = {
-            id: this.id,
-            name: node.name || `plot-${node.id}`,            
-            label: '',            
-            event: '',
-            time: 0,
-            value: 0,
-        };
-        
         node.buffer = [];            
 
         socket.ev.on('newsocket', function () {
@@ -29,21 +20,31 @@ module.exports = function (RED) {
 
             node.send(msg);        
         
-            node.plot.label = msg.label || node.plot.name;
+            let plot = {
+                id: this.id,
+                name: node.name || `plot-${node.id}`,
+                label: msg.label || node.name || `plot-${node.id}`,
+                event: 'update',
+                time: msg.time,
+                value: msg.payload
+            };
 
-            console.log(`label: ${node.plot.label}`)
+            //console.log(`label: ${plot.name}`)
+
         
             if(node.buffer.length == 0){
-                node.plot.event = 'reset';
-                node.buffer.push(node.plot);
+                let plotReset = {
+                    id: this.id,
+                    event: 'reset'
+                };
+                node.buffer.push(plotReset);
+                socket.emit('plot', plotReset)
+                console.log(`Iniciou **-*-*-*-*-*-*`)
             }
 
-            node.plot.event = 'update';
-            node.plot.value = msg.payload;
-            node.plot.time = msg.time;
-            node.buffer.push(node.plot);
+            node.buffer.push(plot);
 
-            socket.emit('plot', node.plot)
+            socket.emit('plot', plot)
         });
     }
     RED.nodes.registerType("plot", PlotNode);

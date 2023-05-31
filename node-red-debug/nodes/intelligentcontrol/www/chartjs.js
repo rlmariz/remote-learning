@@ -52,7 +52,7 @@ function addDataSet(plotData) {
     chart.data.datasets.push({
         label: plotData.label,
         lineTension: 0.1,
-        pointRadius: 0,
+        pointRadius: 1,
         fill: false,
         borderColor: getDataSetColor(plotData),
         borderWidth: 1,
@@ -103,8 +103,26 @@ function RemoveOldData(plotData) {
     }
 }
 
+function resetPlot(plotData) {
+    console.log(`Chama Reset Plot: ${JSON.stringify(plotData)}`)
+    if (listPlots[plotData.id] !== undefined) {
+        console.log(`Reset Plot: ${JSON.stringify(plotData)}`)
+        let chart = getChart(plotData)
+        chart.data.labels = [];
+        chart.data.datasets = [];
+        chart.update()
+        listPlots[plotData.id].indexColors = -1;
+    }
+}
+
 function addData(plotData) {
-    //console.log(`addData: ${JSON.stringify(plotData)}`)
+    console.log(`addData: ${JSON.stringify(plotData)}`)
+
+    if (plotData.event === 'reset') {
+        resetPlot(plotData)
+        return;
+    }
+
     let chart = getChart(plotData)
     let dataSetIndex = -1;
 
@@ -122,6 +140,8 @@ function addData(plotData) {
 
         addLabel(plotData)
         chart.data.datasets[dataSetIndex].data.push(plotData.value)
+        //console.log(chart.data.datasets[dataSetIndex].data)
+        //chart.update()
 
     }
 
@@ -138,9 +158,7 @@ async function updateUI() {
 
     setInterval(function () {
         while (listUpdates.length > 0) {
-
-            let plotData = listUpdates.shift();
-            addData(plotData)
+            addData(listUpdates.shift())
         }
         updateChartUI();
     }, 300);
@@ -152,6 +170,7 @@ function createChart(ctx) {
     var options = {
         responsive: true,
         maintainAspectRatio: false,
+        showLines: true,
         animation: {
             duration: 0
         },
@@ -164,11 +183,10 @@ function createChart(ctx) {
                 ticks: {
                     beginAtZero: true
                 }
-            }]
-            // ,
-            // x: {
-            //     type: 'linear',
-            // }
+            }],
+            x: {
+                type: 'linear',
+            }
         }
     };
 
@@ -185,6 +203,16 @@ function createChart(ctx) {
 function addPlot(plotData) {
     console.log(`Create Plot: ${JSON.stringify(plotData)}`)
 
+    var tabs = document.querySelectorAll('.nav-tabs .nav-link');
+    var isActive = false;
+
+    tabs.forEach(function (tab) {
+        if (tab.classList.contains('active')) {
+            isActive = true;
+            return; // To break the loop as soon as an active item is found
+        }
+    });
+
     let plotArea = document.getElementById('plotarea');
 
     let plotAreaContent = document.getElementById('plotarea-content');
@@ -194,6 +222,11 @@ function addPlot(plotData) {
     let a = document.createElement('a');
     a.setAttribute('href', '#' + plotId);
     a.className = 'nav-link';
+    if (!isActive) {
+        a.className = 'nav-link active';
+    } else {
+        a.className = 'nav-link';
+    }
     a.setAttribute('data-bs-toggle', 'tab')
     a.appendChild(document.createTextNode(plotData.name));
 
@@ -207,12 +240,24 @@ function addPlot(plotData) {
     canvas.height = window.innerHeight - 100;
 
     let div = document.createElement('div');
-    div.className = "tab-pane fade show active";
+    if (!isActive) {
+        div.className = "tab-pane fade show active";
+    } else {
+        div.className = "tab-pane fade";
+    }
     div.id = plotId;
     div.appendChild(canvas);
 
     plotArea.appendChild(li);
     plotAreaContent.appendChild(div);
+
+    // if (!isActive) {
+    // //Remove the "show active" class from the rest of the tabs    
+    //     var allTabs = document.getElementsByClassName("tab-pane");
+    //     for (var i = 0; i < allTabs.length; i++) {
+    //         allTabs[i].classList.remove("show", "active");
+    //     }
+    //     document.getElementById(plotId).classList.add("show", "active");
 
     return createChart(canvas.getContext('2d'))
 }
