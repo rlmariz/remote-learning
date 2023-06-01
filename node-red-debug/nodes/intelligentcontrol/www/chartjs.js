@@ -22,6 +22,16 @@ const plotColors = [
     'salmon',
     'lavender'
 ];
+const chartType = 'scatter';
+//const chartType = 'line';
+
+function getPoint(plotData) {
+    if (chartType === 'scatter') {
+        return { x: plotData.time, y: plotData.value }
+    } else {
+        return plotData.value
+    }
+}
 
 function getDataSetColor(plotData) {
     if (listPlots[plotData.id].indexColors < plotColors.length) {
@@ -56,7 +66,9 @@ function addDataSet(plotData) {
         fill: false,
         borderColor: getDataSetColor(plotData),
         borderWidth: 1,
-        data: [plotData.value]
+        tension: 0,
+        showLine: true,
+        data: [getPoint(plotData)]
     });
 
     addLabel(plotData)
@@ -71,27 +83,12 @@ function addLabel(plotData) {
     if (!labels.includes(plotData.time)) {
         chart.data.labels.push(plotData.time);
     }
-
+    
+    
     if (plotData.time < lastTime) {
         chart.data.labels.sort(function (a, b) {
             return a - b;
         });
-    }
-
-
-    return;
-
-    if (!labels.includes(plotData.time)) {
-
-        let index = labels.findIndex(function (element) {
-            return plotData.time < element;
-        });
-
-        if (index === -1) {
-            index = labels.length;
-        }
-
-        chart.data.labels.splice(index, 0, plotData.time);
     }
 }
 
@@ -116,7 +113,7 @@ function resetPlot(plotData) {
 }
 
 function addData(plotData) {
-    console.log(`addData: ${JSON.stringify(plotData)}`)
+    //console.log(`addData: ${JSON.stringify(plotData)}`)
 
     if (plotData.event === 'reset') {
         resetPlot(plotData)
@@ -139,7 +136,7 @@ function addData(plotData) {
     } else {
 
         addLabel(plotData)
-        chart.data.datasets[dataSetIndex].data.push(plotData.value)
+        chart.data.datasets[dataSetIndex].data.push(getPoint(plotData))
         //console.log(chart.data.datasets[dataSetIndex].data)
         //chart.update()
 
@@ -191,7 +188,7 @@ function createChart(ctx) {
     };
 
     return new Chart(ctx, {
-        type: 'line',
+        type: chartType,
         data: {
             labels: [],
             datasets: [],
@@ -251,14 +248,6 @@ function addPlot(plotData) {
     plotArea.appendChild(li);
     plotAreaContent.appendChild(div);
 
-    // if (!isActive) {
-    // //Remove the "show active" class from the rest of the tabs    
-    //     var allTabs = document.getElementsByClassName("tab-pane");
-    //     for (var i = 0; i < allTabs.length; i++) {
-    //         allTabs[i].classList.remove("show", "active");
-    //     }
-    //     document.getElementById(plotId).classList.add("show", "active");
-
     return createChart(canvas.getContext('2d'))
 }
 
@@ -271,8 +260,6 @@ function plotValue(message) {
     } else {
         listUpdates.push(message)
     }
-
-
 
 }
 

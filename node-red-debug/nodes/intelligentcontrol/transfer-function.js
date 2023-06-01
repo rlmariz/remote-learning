@@ -66,7 +66,7 @@ module.exports = function (RED) {
         }
 
         node.ws.onopen = function (e) {
-            node.log(`WebSocket onopen: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
+            node.log(`WebSocket: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
             node.status({ fill: "green", shape: "dot", text: "connected" });
             node.sendonws(`tfs:${node.function}`)
             //node.sendonws(`tfn:${node.id}`)
@@ -80,15 +80,21 @@ module.exports = function (RED) {
             node.socketConnected = true;
         }
 
-        node.ws.onmessage = function (e) {
-            //console.log(e)
-            if (e !== undefined && e.data !== undefined) {
-                node.log(`Calc: ${node.time} - ${e.data}`);
-                node.send({
-                    payload: parseFloat(e.data),
-                    time: node.time,
-                    label: node.name || node.function || node.id
-                });
+        node.ws.onmessage = function (e) {            
+            try {
+                if (e !== undefined && e.data !== undefined && e.data !== 'unknown' && e.data !== '') {
+                    let calc = JSON.parse(e.data);
+                    node.log(`Calc: ${calc.time} - ${calc.value}`);
+                    node.send({
+                        payload: parseFloat(calc.value),
+                        time: calc.time,
+                        label: node.name || node.function || node.id,
+                        id: node.id
+                    });
+                }
+            } catch (erro) {
+                console.log("Ocorreu um erro:", erro);
+                console.log(e.data)
             }
         }
 
@@ -108,15 +114,15 @@ module.exports = function (RED) {
 
         node.on('input', function (msg) {
 
-            if (node.time < 10 && node.socketConnected){
+            if (node.time <= 10 && node.socketConnected) {
                 let valueInput = msg.payload;
 
                 msg.payload = valueInput;
                 msg.label = node.name;
                 node.sendonws(`tfc:${node.time}`)
-                node.time = parseFloat((node.time + node.stepsize).toFixed(2));                
+                node.time = parseFloat((node.time + node.stepsize).toFixed(2));
             }
-            
+
         });
     }
 

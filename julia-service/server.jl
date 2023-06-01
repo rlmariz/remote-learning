@@ -6,13 +6,14 @@ using Dates
 using Sockets
 using InverseLaplace
 using HTTP
+using JSON
 
 include("infolabs.jl")
 #using .InfoLabs
 
 global LASTREQ = 0
 global LASTWS = 0
-global LASTMSG = 0
+#global LASTMSG = 0
 global LASTSERVER = 0
 
 const CLOSEAFTER = Dates.Second(15)
@@ -49,18 +50,39 @@ Other instances of the function run in other tasks.
 """
 function coroutine(thisws)
     println("call coroutine")
-    global lastws = thisws
+    #global lastws = thisws
     push!(WEBSOCKETS, thisws => length(WEBSOCKETS) + 1)
     push!(ListInfoLabs, thisws => InfoLab())
-    t1 = now() + CLOSEAFTER
+    #t1 = now() + CLOSEAFTER
     username = ""
     #while now() < t1
     while true
 
+        #println("1111111111111111")
         data, success = readguarded(thisws)
+        
         !success && break
 
-        global LASTMSG = msg = String(data)
+        msg = String(data)
+
+        if msg == ""
+        #    println("vazio")
+            continue
+        end
+
+        #println(msg)
+        #println("2222222222222222")
+
+        #if success
+        #    println("********************")
+        #end
+
+        
+        #println("3333333333333333")
+        #println(typeof(data))
+        #println("4444444444444444")
+
+        #global LASTMSG = msg
 
         # @info Received = msg
 
@@ -68,12 +90,12 @@ function coroutine(thisws)
 
         try
 
-            let infolab = get(ListInfoLabs, thisws, InfoLab())
+            let infolab = get(ListInfoLabs, thisws, InfoLab())                
                 local time, value, msgtype = process_message(infolab, msg)
                 # if ("$value" != "")
                 if msgtype == "tfc"
                     #@info value = value
-                    writeguarded(thisws, "$value")
+                    writeguarded(thisws, JSON.json(Dict("time" => time, "value" => value)))
                     # notifyplot(infolab.name, time, value)                
                 end
             end

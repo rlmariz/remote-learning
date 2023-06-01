@@ -4,7 +4,8 @@ dependencies = [
     "WebSockets",
     "Sockets",
     "InverseLaplace",
-    "HTTP"
+    "HTTP",
+    "JSON"
 ]
 
 Pkg.add(dependencies)
