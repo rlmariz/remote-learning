@@ -1,0 +1,31 @@
+<script type="text/html" data-template-name="plot">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>    
+
+    <div class="form-row">
+        <label for="node-input-function"><i class="fa fa-pencil"></i> Function</label>
+        <input type="text" id="node-input-function" placeholder="8/(8*s**2+s)">
+    </div>    
+</script>
+
+<script type="text/html" data-help-name="plot">
+    <p>Node for plotting graphs for studying control systems.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('plot', {
+        category: 'remote learn',
+        color: '#33c4ff',
+        defaults: {
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "plot.svg",
+        label: function () {
+            return this.name || "plot";
+        }
+    });
+</script>

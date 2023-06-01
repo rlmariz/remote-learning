@@ -34,9 +34,10 @@
   "runArgs": ["--name", "remote-learning-dev"],
 
   "mounts": [
-    "source=${localWorkspaceFolderBasename}-node-red-node_modules,target=${containerWorkspaceFolder}/node-red-debug/node_modules,type=volume",
-    "source=${localWorkspaceFolderBasename}-data-node_modules,target=${containerWorkspaceFolder}/node-red-debug/data/node_modules,type=volume",
-    "source=${localWorkspaceFolderBasename}-intelligentcontrol-node_modules,target=${containerWorkspaceFolder}/node-red-debug/nodes/intelligentcontrol/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-node-red-node_modules,target=${containerWorkspaceFolder}/node-red/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-data-node_modules,target=${containerWorkspaceFolder}/node-red/data/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-intelligentcontrol-node_modules,target=${containerWorkspaceFolder}/node-red/nodes/intelligentcontrol/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-labcontrol-node_modules,target=${containerWorkspaceFolder}/node-red/nodes/labcontrol/node_modules,type=volume",
     "source=${localWorkspaceFolderBasename}-julia,target=/root/.julia"
 
   ],
