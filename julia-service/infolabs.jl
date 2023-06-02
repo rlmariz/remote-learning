@@ -1,15 +1,7 @@
-#pkg> add InverseLaplace
-
-#module InfoLabs
-
-#using BigFloat
-
 export process_message
+export InfoLab
 
 using InverseLaplace
-#import InverseLaplace: talbot
-
-export InfoLab
 
 mutable struct InfoLab
     tp::String
@@ -47,22 +39,14 @@ mutable struct InfoLab
                     ")",
                 ),
             )
-            #local value = eval(Meta.parse("InverseLaplace.talbot(s -> (" * "8 / (8s + 1)" * ")*1/s" * ", " * "1" * ")"))
-            #push!(this.Values, (time, this.func_invlap(time))) 
-            #push!(this.Values, (time, value))
             if isnan(value)
                 value = 0
             end
-
 
             value2 = float(value)
 
             local num_digits = 4;
             value2 = round(value2, digits=num_digits)
-
-            #local value2 = setprecision(value, num_digits)
-
-            #value = 1
 
             return convert(Float32, value2)
         end
@@ -80,11 +64,14 @@ function process_message(infolab::InfoLab, message::String)
     value ::  Float32 = 0;
     time :: Float32 = 0;
     msg :: String = "";
+    ret :: String = "";
 
     if startswith(message, "tfs:")
         try
             msg = "tfs";
-            infolab.func = message[length("tfs:")+1:end]
+            func = message[length("tfs:")+1:end]
+            infolab.func = func
+            @info "tfs: func = $func" 
         catch e
             println(e)
         end
@@ -93,8 +80,9 @@ function process_message(infolab::InfoLab, message::String)
     if startswith(message, "tfn:")
         try
             msg = "tfn";
-            infolab.name = message[length("tfn:")+1:end]
-            @info "tfn: " name = infolab.name
+            name = message[length("tfn:")+1:end]
+            infolab.name = name
+            @info "tfn: name = $name" 
         catch e
             println(e)
         end
@@ -105,17 +93,13 @@ function process_message(infolab::InfoLab, message::String)
             msg = "tfc";
             time = parse(Float32, message[length("tfc:")+1:end])
             time = round(time, digits=2)
-            value = infolab.CalcValue(time)            
-            # msg = "$value";
-            # send(client, "$value")
-            # notifyplot(infolab.name, time, value)
-            #local value = eval(Meta.parse("InverseLaplace.talbot(s -> (" * infolab.func * ")*1/s" * ", " * "1" * ")"))
-                # value
-            @info "Calc: " time = time value = value
+            value = infolab.CalcValue(time)         
+            ret = JSON.json(Dict("time" => time, "value" => value))   
+            @info "tfc: time = $time value = $value"  
         catch e
             println(e)
         end
     end
 
-    return time, value, msg;
+    return ret;
 end
