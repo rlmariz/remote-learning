@@ -655,8 +655,8 @@
             }
         }
     },
-    "red-contrib-remotelearn-intelligentcontrol": {
-        "name": "red-contrib-remotelearn-intelligentcontrol",
+    "node-red-contrib-remotelearn-intelligentcontrol": {
+        "name": "node-red-contrib-remotelearn-intelligentcontrol",
         "version": "1.0.0",
         "local": true,
         "user": true,
@@ -669,8 +669,8 @@
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/red-contrib-remotelearn-intelligentcontrol/lower-case.js"
+                "module": "node-red-contrib-remotelearn-intelligentcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/lower-case.js"
             },
             "plot": {
                 "name": "plot",
@@ -680,8 +680,8 @@
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/red-contrib-remotelearn-intelligentcontrol/plot.js"
+                "module": "node-red-contrib-remotelearn-intelligentcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/plot.js"
             },
             "transfer-function": {
                 "name": "transfer-function",
@@ -691,8 +691,69 @@
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/red-contrib-remotelearn-intelligentcontrol/transfer-function.js"
+                "module": "node-red-contrib-remotelearn-intelligentcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/transfer-function.js"
+            }
+        }
+    },
+    "node-red-contrib-remotelearn-labcontrol": {
+        "name": "node-red-contrib-remotelearn-labcontrol",
+        "version": "1.0.5",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "sensor": {
+                "name": "sensor",
+                "types": [
+                    "sensor"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remotelearn-labcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/sensor.js"
+            },
+            "tanque": {
+                "name": "tanque",
+                "types": [
+                    "tanque"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remotelearn-labcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/tanque.js"
+            },
+            "pidcontrol": {
+                "name": "pidcontrol",
+                "types": [
+                    "PID control"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remotelearn-labcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/pidcontrol.js"
+            },
+            "atuador": {
+                "name": "atuador",
+                "types": [
+                    "atuador"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remotelearn-labcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/atuador.js"
+            },
+            "transferfunction": {
+                "name": "transferfunction",
+                "types": [],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remotelearn-labcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/transferfunction.js"
             }
         }
     }

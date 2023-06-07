@@ -1,5 +1,5 @@
 {
-  "name": "red-contrib-remotelearn-intelligentcontrol",
+  "name": "node-red-contrib-remotelearn-intelligentcontrol",
   "version": "1.0.0",
   "description": "Virtual laboratory for learning Intelligent Systems Control.",
   "node-red": {
