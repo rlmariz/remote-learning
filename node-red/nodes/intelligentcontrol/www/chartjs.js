@@ -49,8 +49,6 @@ function getChart(plotData) {
             plot: addPlot(plotData),
             indexColors: -1
         }
-        //addPlot(plotData);
-        //indexColors[plotData.id] = -1
     }
     return listPlots[plotData.id].plot;
 }
@@ -83,8 +81,8 @@ function addLabel(plotData) {
     if (!labels.includes(plotData.time)) {
         chart.data.labels.push(plotData.time);
     }
-    
-    
+
+
     if (plotData.time < lastTime) {
         chart.data.labels.sort(function (a, b) {
             return a - b;
@@ -96,7 +94,6 @@ function RemoveOldData(plotData) {
     const chart = getChart(plotData)
     while (chart.data.labels.length > 0 && chart.data.labels[0] >= plotData.time) {
         chart.data.labels.shift();
-        //chart.data.datasets[datasetPlot].data.shift();
     }
 }
 
@@ -137,9 +134,7 @@ function addData(plotData) {
 
         addLabel(plotData)
         chart.data.datasets[dataSetIndex].data.push(getPoint(plotData))
-        //console.log(chart.data.datasets[dataSetIndex].data)
-        //chart.update()
-
+        
     }
 
     //RemoveOldData(plotData)

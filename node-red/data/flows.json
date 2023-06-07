@@ -2,7 +2,15 @@
     {
         "id": "c93c614a599c933f",
         "type": "tab",
-        "label": "Transfer Funcion",
+        "label": "transfer funcion",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ab5e3818ec9b841f",
+        "type": "tab",
+        "label": "mass & spring",
         "disabled": false,
         "info": "",
         "env": []
@@ -136,7 +144,9 @@
         "z": "c93c614a599c933f",
         "name": "",
         "function": "1 / (s + 1)",
-        "x": 420,
+        "stepsize": "0.1",
+        "stopsize": "10",
+        "x": 400,
         "y": 180,
         "wires": [
             [
@@ -194,6 +204,8 @@
         "z": "c93c614a599c933f",
         "name": "",
         "function": "1/(s^2 + 0.5s + 1)",
+        "stepsize": "0.1",
+        "stopsize": "10",
         "x": 390,
         "y": 380,
         "wires": [

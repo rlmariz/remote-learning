@@ -4,41 +4,25 @@ export InfoLab
 using InverseLaplace
 
 mutable struct InfoLab
-    tp::String
     name::String
-    func::String
-    func_parse::Function
-    func_invlap::Talbot
 
-    Values::Any
     Socket::Any
 
-    CalcInverseLaplace::Any
     CalcValue::Any
     ReadMessage::Any
 
     function InfoLab()
         this = new()
 
-        this.Values = []
+        this.name = ""
 
-        this.CalcInverseLaplace = function ()
-            f = eval(Meta.parse("f(s) = " * this.func))
-            this.func_invlap = Talbot(f, 80)
-            nothing
-        end
-
-        this.CalcValue = function (time::Float32)
+        this.CalcValue = function (tf::String, input::String, time::Float32)
             local value = eval(
                 Meta.parse(
-                    "InverseLaplace.talbot(s -> (" *
-                    this.func *
-                    ")*1/s" *
-                    ", " *
-                    string(time) *
-                    ")",
+                    "InverseLaplace.talbot(s -> ( $tf ) * $input , $time)",
                 ),
             )
+
             if isnan(value)
                 value = 0
             end
@@ -63,42 +47,31 @@ function process_message(infolab::InfoLab, message::String)
 
     value ::  Float32 = 0;
     time :: Float32 = 0;
-    msg :: String = "";
     ret :: String = "";
 
-    if startswith(message, "tfs:")
-        try
-            msg = "tfs";
-            func = message[length("tfs:")+1:end]
-            infolab.func = func
-            @info "tfs: func = $func" 
-        catch e
-            println(e)
-        end
-    end
+    if startswith(message, "{") && endswith(message, "}")
+        eventJson = JSON.parse(message)
+        event = eventJson["event"]
 
-    if startswith(message, "tfn:")
-        try
-            msg = "tfn";
-            name = message[length("tfn:")+1:end]
+        if event == "tfc"
+            input = eventJson["input"]
+            time = eventJson["time"]
+            tf =  eventJson["tf"]
+
+            try
+                value = infolab.CalcValue(tf, input, time)         
+                ret = JSON.json(Dict("time" => time, "value" => value))   
+                @info "tfc: time = $time value = $value"  
+            catch e
+                println(e)
+            end
+        end
+
+        if event == "snm"
+            name = eventJson["name"]
             infolab.name = name
-            @info "tfn: name = $name" 
-        catch e
-            println(e)
-        end
-    end
-
-    if startswith(message, "tfc:")
-        try
-            msg = "tfc";
-            time = parse(Float32, message[length("tfc:")+1:end])
-            time = round(time, digits=2)
-            value = infolab.CalcValue(time)         
-            ret = JSON.json(Dict("time" => time, "value" => value))   
-            @info "tfc: time = $time value = $value"  
-        catch e
-            println(e)
-        end
+            @info "snm: name = $name" 
+        end        
     end
 
     return ret;

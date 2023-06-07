@@ -10,24 +10,13 @@ module.exports = function (RED) {
 
         var node = this;
 
-        node.function = n.function;
-
+        node.function = n.function;        
+        node.stepsize = parseFloat(n.stepsize) || 0.1;
+        node.stopsize = parseFloat(n.stopsize) || 0.0;
         node.time = 0.0;
-        node.stepsize = 0.1;
         node.socketConnected = false;
 
         this.status({ fill: "red", shape: "ring", text: "disconnected" });
-
-        var tf = {
-            name: 'tf-' + node.id,
-            func: '8/(8*s**2+s)'
-        }
-
-        var tfinput = {
-            name: tf.name,
-            t: 0,
-            y: 0
-        }
 
         node.log("socker connecting...");
 
@@ -68,10 +57,7 @@ module.exports = function (RED) {
         node.ws.onopen = function (e) {
             node.log(`WebSocket: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
             node.status({ fill: "green", shape: "dot", text: "connected" });
-            node.sendonws(`tfs:${node.function}`)
-            //node.sendonws(`tfn:${node.id}`)
             node.socketConnected = true;
-            node.sendonws(`tfn:${"Teste"}`)
         }
 
         node.ws.onclose = function (e) {
@@ -108,19 +94,23 @@ module.exports = function (RED) {
             }
         }
 
-        // node.log("*** log ***");
-        // node.warn("*** warn ***");
-        // node.error("*** error ***");
-
         node.on('input', function (msg) {
 
-            if (node.time <= 10 && node.socketConnected) {
+            if ((node.stopsize === 0 || node.time <= node.stopsize) && node.socketConnected) {
                 let valueInput = msg.payload;
 
                 msg.payload = valueInput;
                 msg.label = node.name;
-                node.sendonws(`tfc:${node.time}`)
-                node.time = parseFloat((node.time + node.stepsize).toFixed(2));
+
+                let event = {
+                    event: 'tfc',
+                    tf: node.function,
+                    input: `${valueInput}/s`,
+                    time: node.time
+                }
+
+                node.sendonws(JSON.stringify(event))
+                node.time = node.time + node.stepsize;
             }
 
         });

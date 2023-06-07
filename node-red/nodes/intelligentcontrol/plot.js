@@ -4,22 +4,19 @@ module.exports = function (RED) {
     function PlotNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
-        
-        node.buffer = [];            
+
+        node.buffer = [];
 
         socket.ev.on('newsocket', function () {
             console.log("***** newsocket *******")
             socket.emit('plot', node.buffer)
-            // node.buffer.forEach((value) => {
-            //     socket.emit('plot', value)
-            // });
-        })        
+        })
 
         node.on('input', function (msg) {
             msg.payload = msg.payload;
 
-            node.send(msg);        
-        
+            node.send(msg);
+
             let plot = {
                 id: this.id,
                 name: node.name || `plot-${node.id}`,
@@ -29,17 +26,13 @@ module.exports = function (RED) {
                 value: msg.payload
             };
 
-            //console.log(`label: ${plot.name}`)
-
-        
-            if(node.buffer.length == 0){
+            if (node.buffer.length == 0) {
                 let plotReset = {
                     id: this.id,
                     event: 'reset'
                 };
                 node.buffer.push(plotReset);
                 socket.emit('plot', plotReset)
-                console.log(`Iniciou **-*-*-*-*-*-*`)
             }
 
             node.buffer.push(plot);

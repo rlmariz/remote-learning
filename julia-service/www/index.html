@@ -26,7 +26,7 @@
 </head>
 
 <body>
-
+    <img src="julia-service.png" alt="Julia Servie" width="200" height="100">
     <h1>Logs</h1>
     <pre id="logContainer"></pre>
 
@@ -66,7 +66,7 @@
 
             ws.onopen = function (e) {
                 addLog("WebSocket " + instancename + ".onopen: Websocket state is now " + e.target.readyState + "-" + readystateDesc[e.target.readyState])
-                sendonws(ws, 'tfn:logs')
+                sendonws(ws, JSON.stringify({event: 'snm', name: 'logs'}))
             }
 
             ws.onclose = function (e) {

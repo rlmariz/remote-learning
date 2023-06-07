@@ -9,28 +9,11 @@ using JSON
 include("infolabs.jl")
 
 global LASTSERVER = 0
+global ListInfoLabs = Dict{WebSocket,InfoLab}()
 
 const HTTPPORT = 2812
-#const LOCALIP = string(Sockets.getipaddr())
 const LOCALIP = "0.0.0.0"
-const USERNAMES = Dict{String,WebSocket}()
-
-# @info """
-# A chat server application. For each browser (tab) that connects,
-# an 'asyncronous function' aka 'coroutine' aka 'task' is started.
-
-# To use:
-#     - include("chat_explore.jl") in REPL
-#     - start a browser on the local ip address, e.g.: http://192.168.0.4:8080
-#     - inspect global variables starting with 'LAST' while the chat is running asyncronously 
-
-# """
-
-# Since we are to access a websocket from outside
-# it's own websocket handler coroutine, we need some kind of
-# mutable container for storing references:
 const WEBSOCKETS = Dict{WebSocket,Int}()
-global ListInfoLabs = Dict{WebSocket,InfoLab}()
 
 ended = Condition()
 
@@ -77,33 +60,16 @@ end
 
 function distributlog(log)
     for (ws, infolab) in ListInfoLabs
-        if infolab.name == "logs"
+        if !isnothing(infolab.name) && infolab.name == "logs"
             writeguarded(ws, log)
         end
     end
 end
 
 function removereferences(ws)
-    haskey(WEBSOCKETS, ws) && pop!(WEBSOCKETS, ws)
-    for (discardname, wsref) in USERNAMES
-        if wsref === ws
-            pop!(USERNAMES, discardname)
-            break
-        end
-    end
+    haskey(WEBSOCKETS, ws) && pop!(WEBSOCKETS, ws)    
     nothing
 end
-
-
-function approvedusername(msg, ws)
-    !startswith(msg, "userName:") && return ""
-    newname = msg[length("userName:")+1:end]
-    newname == "" && return ""
-    haskey(USERNAMES, newname) && return ""
-    push!(USERNAMES, newname => ws)
-    newname
-end
-
 
 function distributemsg(msgout, not_to_ws)
     foreach(keys(WEBSOCKETS)) do ws
@@ -134,20 +100,8 @@ end
 
 "Request to response. Response is the predefined HTML page with some javascript"
 function req2resp(req::Request)
-    # println(req)
-    # println("----------------------------")
-    # println(req.method)
-    # println(target(req))
-    # println(req.target)
-    # if target(req) == "/favicon.ico"
-    #     return read(joinpath(@__DIR__, "www/favicon.ico"))
-    # end
-    #return read(joinpath(@__DIR__, "chat_explore.html"), String)
-
     req.target == "/" && return HTTP.Response(200, read("www/index.html"))
-    #file = HTTP.unescapeuri(req.target[2:end]))
     file = "www/" * req.target[2:end]
-    # println(file)
     return isfile(file) ? HTTP.Response(200, read(file)) : HTTP.Response(404)
 end
 
