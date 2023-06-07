@@ -18,7 +18,7 @@ module.exports = function (RED) {
 
         this.status({ fill: "red", shape: "ring", text: "disconnected" });
 
-        node.log("socker connecting...");
+        //node.log("socker connecting...");
 
         node.codeDesc = {
             1000: "Normal",
@@ -51,17 +51,17 @@ module.exports = function (RED) {
         node.ws.mynam = node.id;
 
         node.ws.onerror = function (e) {
-            node.log(`WebSocket onerror: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
+            //node.log(`WebSocket onerror: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
         }
 
         node.ws.onopen = function (e) {
-            node.log(`WebSocket: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
+            //node.log(`WebSocket: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
             node.status({ fill: "green", shape: "dot", text: "connected" });
             node.socketConnected = true;
         }
 
         node.ws.onclose = function (e) {
-            node.log(`WebSocket onclose: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
+            //node.log(`WebSocket onclose: state is now ${e.target.readyState}-${node.readystateDesc[e.target.readyState]}`);
             node.status({ fill: "red", shape: "ring", text: "disconnected" });
             node.socketConnected = true;
         }
@@ -70,7 +70,7 @@ module.exports = function (RED) {
             try {
                 if (e !== undefined && e.data !== undefined && e.data !== 'unknown' && e.data !== '') {
                     let calc = JSON.parse(e.data);
-                    node.log(`Calc: ${calc.time} - ${calc.value}`);
+                    //node.log(`Calc: ${calc.time} - ${calc.value}`);
                     node.send({
                         payload: parseFloat(calc.value),
                         time: calc.time,
@@ -79,8 +79,8 @@ module.exports = function (RED) {
                     });
                 }
             } catch (erro) {
-                console.log("Ocorreu um erro:", erro);
-                console.log(e.data)
+                //console.log("Ocorreu um erro:", erro);
+                //console.log(e.data)
             }
         }
 
@@ -89,7 +89,7 @@ module.exports = function (RED) {
                 node.ws.send(msg);
                 return true;
             } else {
-                node.log('WebSocket not ready.')
+                //node.log('WebSocket not ready.')
                 return false
             }
         }

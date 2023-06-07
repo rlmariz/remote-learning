@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remote Learning</title>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <h1>Remote Learning - Supervisory</h1>
+
+  <br>
+
+  <label for="ref1" class="label">Ref 1:</label>
+  <input type="number" id="ref1" name="ref1" min="1" max="11" step="1" value="6" onchange="refChanged()" class="input">
+
+  <label for="ref2" class="label">Ref 2:</label>
+  <input type="number" id="ref2" name="ref2" min="1" max="11" step="1" value="6" onchange="refChanged()" class="input">
+
+  <label for="control_type" class="label">Control Type:</label>
+  <select id="control_type" width="100px" name="control_type" onchange="refChanged()" class="input-combobox">
+    <option value="pmc_nn">PMC + Neural Network</option>
+    <option value="pmc">PMC + Model</option>
+    <option value="rf">Reinforcement Learning</option>
+  </select>
+
+  <div id="level_chart" style="height: 400px;"></div>
+  <div id="signal_chart" style="height: 300px;"></div>
+  <div id="error_chart" style="height: 300px;"></div>
+
+  <div id="planta">
+    <img src="planta.png" alt="Simulated plant of two connected tanks." class="imagem-responsiva">
+  </div>
+
+  <script>
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    const socket = io();
+    const maxPoints = 60;
+    const letfChart = 50
+    const chartWidth = "96%"
+    let ref1 = 0
+    let ref2 = 0
+    let control_type = 'pmc_nn'
+
+    function refChanged() {
+      var ref1Input = document.getElementById("ref1");
+      ref1 = parseInt(ref1Input.value);
+
+      var ref2Input = document.getElementById("ref2");
+      ref2 = parseInt(ref2Input.value);
+
+      var controltypeInput = document.getElementById("control_type");
+      control_type = controltypeInput.value;
+
+      socket.emit("ref", { ref1, ref2, control_type })
+    }
+
+    socket.on('data', (data) => {
+
+      if (data.ref1 !== undefined && data.ref1 !== null && !isNaN(data.ref1) && data.ref1 >= 1 && data.ref1 <= 11 && data.ref1 != ref1) {
+        var ref1Input = document.getElementById("ref1");
+        ref1 = data.ref1
+        ref1Input.value = data.ref1
+      }
+
+      if (data.ref2 !== undefined && data.ref2 !== null && !isNaN(data.ref2) && data.ref2 >= 1 && data.ref2 <= 11 && data.ref2 != ref2) {
+        var ref2Input = document.getElementById("ref2");
+        ref2 = data.ref2
+        ref2Input.value = data.ref2
+      }
+
+      if (data.controltype !== undefined && data.controltype !== null && data.controltype === 'pmc_nn') {
+        var controltypeInput = document.getElementById("control_type");
+        control_type = data.controltype
+        controltypeInput.value = 'pmc_nn'
+      }
+
+      if (data.controltype !== undefined && data.controltype !== null && data.controltype === 'pmc') {
+        var controltypeInput = document.getElementById("control_type");
+        control_type = data.controltype
+        controltypeInput.value = 'pmc'
+      }
+
+      if (data.ref2 !== undefined && data.ref2 !== null && data.controltype === 'rf') {
+        var controltypeInput = document.getElementById("control_type");
+        control_type = data.controltype
+        controltypeInput.value = 'rf'
+      }
+
+      if (data.started !== undefined && data.started !== null && data.started === 0) {
+        refChanged()
+      }
+
+    });
+
+    function drawChart() {
+      drawLevelChart()
+      drawSignalChart()
+      drawErrorChart()
+    }
+
+    function drawLevelChart() {
+      let data = [['Labels', 'x1', 'x2', 'ref1', 'ref2']];
+      let nextLabel = 0;
+
+      const options = {
+        title: 'Tank Level',
+        curveType: 'function',
+        legend: {
+          position: 'bottom'
+        },
+        chartArea: {
+          left: letfChart,
+          top: 20,
+          width: chartWidth
+        },
+        vAxis: {
+          title: 'Level(m)',
+          ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        },
+        hAxis: {
+          title: 'Steps/Time(s)',
+          slantedText: true, // Habilita texto inclinado
+          slantedTextAngle: 45, // Ângulo de inclinação em graus
+          count: 60, // Número de linhas de grade
+          minorGridlines: { // Linhas de grade menores do eixo horizontal
+            color: 'lightgray', // Cor das linhas de grade menores
+            count: 1 // Número de linhas de grade menores
+          },
+          gridlines: { // Linhas de grade do eixo horizontal
+            color: 'gray', // Cor das linhas de grade
+            count: 60, // Número de linhas de grade
+            units: { // Unidades personalizadas para as linhas de grade
+              integer: { format: [''] }
+            }
+          },
+          textStyle: {
+            fontSize: 10
+          }
+        },
+        series: {
+          0: {
+            color: 'blue',
+            lineWidth: 0.5
+          },
+          1: {
+            color: 'red',
+            lineWidth: 0.5
+          },
+          2: {
+            lineDashStyle: [4, 4],
+            color: 'blue',
+            lineWidth: 0.5
+          },
+          3: {
+            lineDashStyle: [8, 8],
+            color: 'red',
+            lineWidth: 0.5
+          }
+        }
+      }
+
+      const levelChart = new google.visualization.LineChart(document.getElementById('level_chart'));
+
+      socket.on('data', (newData) => {
+        const newDataArray = [nextLabel++, newData.x1, newData.x2, newData.ref1, newData.ref2];
+        data.push(newDataArray);
+
+        if (data.length > maxPoints) {
+          data.splice(1, data.length - maxPoints);
+        }
+
+        const dataTable = google.visualization.arrayToDataTable(data);
+        levelChart.draw(dataTable, options);
+      });
+
+    }
+
+    function drawSignalChart() {
+
+      let data = [['Labels', 'qe', 'qc']];
+      let nextLabel = 0;
+
+      const options = {
+        title: 'Signal Control',
+        curveType: 'function',
+        legend: {
+          position: 'bottom'
+        },
+        chartArea: {
+          left: letfChart,
+          top: 20,
+          width: chartWidth
+        },
+        vAxis: {
+          title: 'm³/s',
+          ticks: [0, 1, 2, 3, 4, 5],
+          min: 0,
+          max: 5,
+        },
+        hAxis: {
+          title: 'Steps/Time(s)',
+          slantedText: true, // Habilita texto inclinado
+          slantedTextAngle: 45, // Ângulo de inclinação em graus
+          count: 60, // Número de linhas de grade
+          minorGridlines: { // Linhas de grade menores do eixo horizontal
+            color: 'lightgray', // Cor das linhas de grade menores
+            count: 1 // Número de linhas de grade menores
+          },
+          gridlines: { // Linhas de grade do eixo horizontal
+            color: 'gray', // Cor das linhas de grade
+            count: 60, // Número de linhas de grade
+            units: { // Unidades personalizadas para as linhas de grade
+              integer: { format: [''] }
+            }
+          },
+          textStyle: {
+            fontSize: 10
+          }
+        },
+        series: {
+          0: {
+            color: 'blue',
+            lineWidth: 0.5
+          },
+          1: {
+            color: 'red',
+            lineWidth: 0.5
+          }
+        }
+      };
+
+      const signalChart = new google.visualization.LineChart(document.getElementById('signal_chart'));
+
+      socket.on('data', (newData) => {
+        const newDataArray = [nextLabel++, newData.qe, newData.qc];
+        data.push(newDataArray);
+
+        if (data.length > maxPoints) {
+          data.splice(1, data.length - maxPoints);
+        }
+
+        const dataTable = google.visualization.arrayToDataTable(data);
+        signalChart.draw(dataTable, options);
+      });
+
+    }
+
+    function drawErrorChart() {
+      let data = [['Labels', 'error1', 'error2', 'error']];
+      let nextLabel = 0;
+
+      const options = {
+        title: 'Error',
+        curveType: 'function',
+        legend: {
+          position: 'bottom'
+        },
+        chartArea: {
+          left: letfChart,
+          top: 20,
+          width: chartWidth
+        },
+        vAxis: {
+          title: 'Error (m)',
+          min: -12,
+          max: 12,
+          ticks: [-12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12]
+        },
+        hAxis: {
+          title: 'Steps/Time(s)',
+          slantedText: true, // Habilita texto inclinado
+          slantedTextAngle: 45, // Ângulo de inclinação em graus
+          count: 60, // Número de linhas de grade
+          minorGridlines: { // Linhas de grade menores do eixo horizontal
+            color: 'lightgray', // Cor das linhas de grade menores
+            count: 1 // Número de linhas de grade menores
+          },
+          gridlines: { // Linhas de grade do eixo horizontal
+            color: 'gray', // Cor das linhas de grade
+            count: 60, // Número de linhas de grade
+            units: { // Unidades personalizadas para as linhas de grade
+              integer: { format: [''] }
+            }
+          },
+          textStyle: {
+            fontSize: 10
+          }
+        },
+        series: {
+          0: {
+            color: 'blue',
+            lineWidth: 0.5
+          },
+          1: {
+            color: 'red',
+            lineWidth: 0.5
+          },
+          2: {
+            lineDashStyle: [4, 4],
+            color: 'rgb(106, 90, 205)',
+            lineWidth: 1
+          }
+        }
+      }
+
+      const errorChart = new google.visualization.LineChart(document.getElementById('error_chart'));
+
+      socket.on('data', (newData) => {
+        e1 = newData.x1 - newData.ref1
+        e2 = newData.x2 - newData.ref2
+        e = e1 + e2
+        const newDataArray = [nextLabel++, e1, e2, e];
+        data.push(newDataArray);
+
+        if (data.length > maxPoints) {
+          data.splice(1, data.length - maxPoints);
+        }
+
+        const dataTable = google.visualization.arrayToDataTable(data);
+        errorChart.draw(dataTable, options);
+      });
+    }    
+  </script>
+</body>
+
+</html>

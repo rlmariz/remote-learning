@@ -5,6 +5,8 @@
   "node-red": {
     "nodes": {
       "lower-case": "lower-case.js",
+      "spring": "spring.js",
+      "mass": "mass.js",      
       "plot": "plot.js",
       "transfer-function": "transfer-function.js"
     }

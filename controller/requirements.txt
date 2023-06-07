@@ -1,0 +1,10 @@
+# pip3 install -r requirements.txt
+pymodbus
+numpy
+ipython
+Keras
+tensorflow
+pandas
+joblib
+matplotlib
+scikit-learn

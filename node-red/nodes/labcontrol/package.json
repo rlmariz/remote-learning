@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-remotelearn-labcontrol",
+  "name": "node-red-contrib-remote-learning",
   "version": "1.0.5",
   "description": "Virtual Lab - Simulação de Plantas Industriais",
   "main": "index.js",

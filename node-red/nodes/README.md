@@ -1,0 +1,1 @@
+Biblioteca virtuallab para simulação de plantas industriais.

@@ -1,0 +1,1583 @@
+[
+    {
+        "id": "30eabd99172917aa",
+        "type": "tab",
+        "label": "Simulation",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6d39aa73397318e6",
+        "type": "tab",
+        "label": "Modbus",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dd13224eac8a9289",
+        "type": "tab",
+        "label": "Test",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fcac8d51.7bff8",
+        "type": "modbus-client",
+        "name": "NodeModbus",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "tcpHost": "virtuallab",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": false,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": false
+    },
+    {
+        "id": "49d3193f.f38d88",
+        "type": "modbus-client",
+        "name": "Modbus-Read-Write",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "tcpHost": "host.docker.internal",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": false,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": false
+    },
+    {
+        "id": "7b4460f816a46442",
+        "type": "tanque",
+        "z": "30eabd99172917aa",
+        "name": "Tank x1",
+        "valveK": "2",
+        "valveOpen": "100",
+        "area": "16",
+        "maxLevel": "12",
+        "startLevel": "0",
+        "integrationInterval": "1000",
+        "intervalUpdate": "1000",
+        "x": 500,
+        "y": 300,
+        "wires": [
+            [
+                "d72a4fe3cce0ecc4"
+            ],
+            [],
+            [
+                "ffb1e96c4d318bd3",
+                "d1eabf4b7cc34ec3"
+            ]
+        ]
+    },
+    {
+        "id": "a20a59ad0bba46c9",
+        "type": "atuador",
+        "z": "30eabd99172917aa",
+        "name": "Válvula",
+        "inputMin": "0",
+        "inputMax": "4",
+        "outputMin": 0,
+        "outputMax": "4",
+        "inputValueStart": "0",
+        "x": 320,
+        "y": 300,
+        "wires": [
+            [
+                "7b4460f816a46442"
+            ]
+        ]
+    },
+    {
+        "id": "69408d61d63f062c",
+        "type": "comment",
+        "z": "30eabd99172917aa",
+        "name": "Simulação de Controle de Nível de Tanques Conectados.",
+        "info": "",
+        "x": 410,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "ffb1e96c4d318bd3",
+        "type": "tanque",
+        "z": "30eabd99172917aa",
+        "name": "Tank x2",
+        "valveK": "1",
+        "valveOpen": "100",
+        "area": "16",
+        "maxLevel": "12",
+        "startLevel": "0",
+        "integrationInterval": "1000",
+        "intervalUpdate": "1000",
+        "x": 580,
+        "y": 400,
+        "wires": [
+            [
+                "0ead92f820dba65f"
+            ],
+            [],
+            [
+                "c76d3b994e708192"
+            ]
+        ]
+    },
+    {
+        "id": "0ead92f820dba65f",
+        "type": "function",
+        "z": "30eabd99172917aa",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 360,
+        "wires": [
+            [
+                "aa3d56ea7d0efc25"
+            ]
+        ]
+    },
+    {
+        "id": "aa3d56ea7d0efc25",
+        "type": "modbus-write",
+        "z": "30eabd99172917aa",
+        "name": "x2",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "16",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 930,
+        "y": 360,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c76d3b994e708192",
+        "type": "function",
+        "z": "30eabd99172917aa",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 420,
+        "wires": [
+            [
+                "da892fa4862771b1"
+            ]
+        ]
+    },
+    {
+        "id": "da892fa4862771b1",
+        "type": "modbus-write",
+        "z": "30eabd99172917aa",
+        "name": "qs",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "20",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 930,
+        "y": 420,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1ad9a7b0777653ae",
+        "type": "function",
+        "z": "30eabd99172917aa",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "a20a59ad0bba46c9"
+            ]
+        ]
+    },
+    {
+        "id": "6a895abd13fb06f6",
+        "type": "modbus-read",
+        "z": "30eabd99172917aa",
+        "name": "qe",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "4",
+        "quantity": "4",
+        "rate": "100",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "1ad9a7b0777653ae"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "be52f80d17a8b176",
+        "type": "modbus-read",
+        "z": "30eabd99172917aa",
+        "name": "vc",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "12",
+        "quantity": "4",
+        "rate": "100",
+        "rateUnit": "ms",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 90,
+        "y": 300,
+        "wires": [
+            [
+                "69098d8166d7b19f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "69098d8166d7b19f",
+        "type": "function",
+        "z": "30eabd99172917aa",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nvc = buf.readFloatBE(0);\nreturn {valveOpen: vc};",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 380,
+        "wires": [
+            [
+                "7b4460f816a46442"
+            ]
+        ]
+    },
+    {
+        "id": "d72a4fe3cce0ecc4",
+        "type": "function",
+        "z": "30eabd99172917aa",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 220,
+        "wires": [
+            [
+                "bcc0f9c8aa2fbc0c"
+            ]
+        ]
+    },
+    {
+        "id": "bcc0f9c8aa2fbc0c",
+        "type": "modbus-write",
+        "z": "30eabd99172917aa",
+        "name": "x1",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "0",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 910,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d1eabf4b7cc34ec3",
+        "type": "function",
+        "z": "30eabd99172917aa",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 280,
+        "wires": [
+            [
+                "9aa1ff4bb98fdd7c"
+            ]
+        ]
+    },
+    {
+        "id": "9aa1ff4bb98fdd7c",
+        "type": "modbus-write",
+        "z": "30eabd99172917aa",
+        "name": "qc",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "8",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 910,
+        "y": 280,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c7284ab24cba9ba9",
+        "type": "modbus-server",
+        "z": "6d39aa73397318e6",
+        "name": "Modbus Server",
+        "logEnabled": false,
+        "hostname": "",
+        "serverPort": "502",
+        "responseDelay": 100,
+        "delayUnit": "ms",
+        "coilsBufferSize": 10000,
+        "holdingBufferSize": 10000,
+        "inputBufferSize": 10000,
+        "discreteBufferSize": 10000,
+        "showErrors": false,
+        "x": 100,
+        "y": 60,
+        "wires": [
+            [],
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6480d9445417fca7",
+        "type": "comment",
+        "z": "6d39aa73397318e6",
+        "name": "00/4 - x1\\n 04/4 - qe\\n 08/4 - qc\\n 12/4 - vc",
+        "info": "",
+        "x": 280,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "0d1319d624277355",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "x1",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "b4a1f434ee2af46e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b4a1f434ee2af46e",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "075c62bb186e3517"
+            ]
+        ]
+    },
+    {
+        "id": "075c62bb186e3517",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "x1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a3731387d00ce16e",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "qe",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "4",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "73e2115c037329e6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "39f08f2b0a24dc8f",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "qe",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "73e2115c037329e6",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 240,
+        "wires": [
+            [
+                "39f08f2b0a24dc8f"
+            ]
+        ]
+    },
+    {
+        "id": "2db1cefd1f21de73",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "qc",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "8",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "92c075e46a90d077"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "056fa417e0c2be6a",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "qc",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "92c075e46a90d077",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 300,
+        "wires": [
+            [
+                "056fa417e0c2be6a"
+            ]
+        ]
+    },
+    {
+        "id": "6d16023757ed3e11",
+        "type": "comment",
+        "z": "6d39aa73397318e6",
+        "name": "16/4 - x2\\n 20/4 - qs\\n 24/4 - vs",
+        "info": "",
+        "x": 420,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2322cc135a59271a",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "x2",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "16",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 360,
+        "wires": [
+            [
+                "fe27f38cba21833b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1135808a976bf46f",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "x2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "fe27f38cba21833b",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "1135808a976bf46f"
+            ]
+        ]
+    },
+    {
+        "id": "9249682622b95298",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "qs",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "20",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 420,
+        "wires": [
+            [
+                "4d616bee73cba6d5"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "610e6ac6b6104779",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "qs",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4d616bee73cba6d5",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "610e6ac6b6104779"
+            ]
+        ]
+    },
+    {
+        "id": "039c0ea0a29b124c",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "watchdog",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "338da2c208cfa6e2",
+        "type": "modbus-write",
+        "z": "6d39aa73397318e6",
+        "name": "watchdog",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "HoldingRegister",
+        "adr": "100",
+        "quantity": "1",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 920,
+        "y": 180,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "79b8032da2335a58",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "rand number",
+        "func": "\nmsg.payload = Math.floor(Math.random() * 1001);\nreturn msg;",
+        "outputs": 1,
+        "timeout": "0",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 240,
+        "wires": [
+            [
+                "039c0ea0a29b124c",
+                "338da2c208cfa6e2"
+            ]
+        ]
+    },
+    {
+        "id": "35ddcdf16064b3c6",
+        "type": "inject",
+        "z": "6d39aa73397318e6",
+        "name": "0.5 seg",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 720,
+        "y": 180,
+        "wires": [
+            [
+                "79b8032da2335a58"
+            ]
+        ]
+    },
+    {
+        "id": "34c9b4c0d5953696",
+        "type": "comment",
+        "z": "6d39aa73397318e6",
+        "name": "28/4 - ref1\\n 32/4 - ref2",
+        "info": "",
+        "x": 560,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "fe381ee185e1f311",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "ref1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "f84f216621dbdb33",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 540,
+        "wires": [
+            [
+                "fe381ee185e1f311"
+            ]
+        ]
+    },
+    {
+        "id": "84820651634b30c8",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "ref1",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "28",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "f84f216621dbdb33"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1445b7f342130a38",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "vs",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "24",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "024f026195c7c2f7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "024f026195c7c2f7",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 480,
+        "wires": [
+            [
+                "f4bf88d4dec9cf23"
+            ]
+        ]
+    },
+    {
+        "id": "f4bf88d4dec9cf23",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "vs",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "666384f26ed70d1a",
+        "type": "modbus-read",
+        "z": "6d39aa73397318e6",
+        "name": "ref2",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "32",
+        "quantity": "4",
+        "rate": "1",
+        "rateUnit": "s",
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "server": "49d3193f.f38d88",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "x": 130,
+        "y": 600,
+        "wires": [
+            [
+                "0408ebf227723c5b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0408ebf227723c5b",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Buffer to Float",
+        "func": "let pay = msg.payload;\nconst buf = Buffer.allocUnsafe(4); // (4) is ok\nbuf.writeUInt16BE(pay[0]); // high byte\nbuf.writeUInt16BE(pay[1], 2); // low byte\nmsg.payload = buf.readFloatBE(0);\nmsg.payload = Math.round(msg.payload * 1000) / 1000\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 600,
+        "wires": [
+            [
+                "d3fcca9ea61c0671"
+            ]
+        ]
+    },
+    {
+        "id": "d3fcca9ea61c0671",
+        "type": "debug",
+        "z": "6d39aa73397318e6",
+        "name": "ref2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "fdba6e2f67012703",
+        "type": "comment",
+        "z": "6d39aa73397318e6",
+        "name": "37/1 - Control Type\\n 1 - PMC + Neural Network\\n 2 - PMC + Model\\n 3 - Reinforcement Learning",
+        "info": "",
+        "x": 750,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "887f02b3ec556413",
+        "type": "function",
+        "z": "6d39aa73397318e6",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 380,
+        "wires": [
+            [
+                "4789793c6b27b8bb"
+            ]
+        ]
+    },
+    {
+        "id": "4789793c6b27b8bb",
+        "type": "modbus-write",
+        "z": "6d39aa73397318e6",
+        "name": "vs",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "24",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 910,
+        "y": 320,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "87c0a3ec172baa86",
+        "type": "inject",
+        "z": "6d39aa73397318e6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 710,
+        "y": 320,
+        "wires": [
+            [
+                "887f02b3ec556413"
+            ]
+        ]
+    },
+    {
+        "id": "d23ce7562e9b84aa",
+        "type": "modbus-write",
+        "z": "dd13224eac8a9289",
+        "name": "Write Valve",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "12",
+        "quantity": "1",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 730,
+        "y": 120,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "43e06968b542633a",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "d23ce7562e9b84aa"
+            ]
+        ]
+    },
+    {
+        "id": "8b901cc47193350c",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "25",
+        "payloadType": "num",
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "d23ce7562e9b84aa"
+            ]
+        ]
+    },
+    {
+        "id": "8a2033fc0f381daa",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "50",
+        "payloadType": "num",
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "d23ce7562e9b84aa"
+            ]
+        ]
+    },
+    {
+        "id": "4bf96612055c7e86",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "75",
+        "payloadType": "num",
+        "x": 210,
+        "y": 180,
+        "wires": [
+            [
+                "d23ce7562e9b84aa"
+            ]
+        ]
+    },
+    {
+        "id": "021e62e8b9401b5d",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "100",
+        "payloadType": "num",
+        "x": 90,
+        "y": 220,
+        "wires": [
+            [
+                "d23ce7562e9b84aa"
+            ]
+        ]
+    },
+    {
+        "id": "c5ab24599ea6d95d",
+        "type": "comment",
+        "z": "dd13224eac8a9289",
+        "name": "Testes Diversos do Controlador e  Simulador",
+        "info": "",
+        "x": 370,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "54628893b53bb493",
+        "type": "function",
+        "z": "dd13224eac8a9289",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 340,
+        "wires": [
+            [
+                "d187db75a335a778"
+            ]
+        ]
+    },
+    {
+        "id": "e46b7fbdbb3f7c44",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "4",
+        "payloadType": "num",
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "54628893b53bb493"
+            ]
+        ]
+    },
+    {
+        "id": "d187db75a335a778",
+        "type": "modbus-write",
+        "z": "dd13224eac8a9289",
+        "name": "qe",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "4",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 570,
+        "y": 340,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "85cea72bc6155ee9",
+        "type": "function",
+        "z": "dd13224eac8a9289",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 400,
+        "wires": [
+            [
+                "73a13e29da5be792"
+            ]
+        ]
+    },
+    {
+        "id": "73a13e29da5be792",
+        "type": "modbus-write",
+        "z": "dd13224eac8a9289",
+        "name": "ref1",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "28",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6a324f980a861520",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "x": 170,
+        "y": 400,
+        "wires": [
+            [
+                "85cea72bc6155ee9"
+            ]
+        ]
+    },
+    {
+        "id": "2eaedf61921adc3c",
+        "type": "function",
+        "z": "dd13224eac8a9289",
+        "name": "Float to Buffer",
+        "func": "var payload=msg.payload;\nvar buf = Buffer.alloc(4);\nbuf.writeFloatBE(payload);\nmsg.payload = buf;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 460,
+        "wires": [
+            [
+                "0ac4cdba5ab6f8a9"
+            ]
+        ]
+    },
+    {
+        "id": "0ac4cdba5ab6f8a9",
+        "type": "modbus-write",
+        "z": "dd13224eac8a9289",
+        "name": "ref2",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "unitid": "1",
+        "dataType": "MHoldingRegisters",
+        "adr": "32",
+        "quantity": "4",
+        "server": "49d3193f.f38d88",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 570,
+        "y": 460,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "84cabc52cc0f5886",
+        "type": "inject",
+        "z": "dd13224eac8a9289",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "2eaedf61921adc3c"
+            ]
+        ]
+    }
+]

@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+        "./app"
+    ],
+    "files.exclude": {
+        "**/*.pyc": true, // Oculta todos os arquivos .pyc (arquivos compilados do Python)
+        "**/__pycache__": true // Oculta a pasta __pycache__
+    }
+}

@@ -672,6 +672,28 @@
                 "module": "node-red-contrib-remotelearn-intelligentcontrol",
                 "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/lower-case.js"
             },
+            "spring": {
+                "name": "spring",
+                "types": [
+                    "spring"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remotelearn-intelligentcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/spring.js"
+            },
+            "mass": {
+                "name": "mass",
+                "types": [
+                    "mass"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remotelearn-intelligentcontrol",
+                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/mass.js"
+            },
             "plot": {
                 "name": "plot",
                 "types": [
