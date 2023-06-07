@@ -3,7 +3,7 @@
         "id": "c93c614a599c933f",
         "type": "tab",
         "label": "transfer funcion",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -222,6 +222,85 @@
         "name": "Plot-3",
         "x": 610,
         "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e26e8d358f50f13",
+        "type": "mass",
+        "z": "ab5e3818ec9b841f",
+        "name": "",
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "0c91efbcd4fd7754",
+                "b9e9c894a99edda3"
+            ]
+        ]
+    },
+    {
+        "id": "64c1f641fc905c80",
+        "type": "spring",
+        "z": "ab5e3818ec9b841f",
+        "name": "",
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "6e26e8d358f50f13"
+            ]
+        ]
+    },
+    {
+        "id": "6b94dfba40a99550",
+        "type": "inject",
+        "z": "ab5e3818ec9b841f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "64c1f641fc905c80"
+            ]
+        ]
+    },
+    {
+        "id": "0c91efbcd4fd7754",
+        "type": "debug",
+        "z": "ab5e3818ec9b841f",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b9e9c894a99edda3",
+        "type": "spring",
+        "z": "ab5e3818ec9b841f",
+        "name": "",
+        "x": 710,
+        "y": 220,
         "wires": [
             []
         ]
