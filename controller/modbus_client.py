@@ -227,8 +227,3 @@ class ModbusClient:
 
 # if __name__ == "__main__":        
 #         asyncio.run(read_modbus())
-       
-modbusClient = ModbusClient(comm="tcp", host="192.168.68.150", port=502)
-modbusClient.qe = 4
-modbusClient.write_data()
-modbusClient.read_data()

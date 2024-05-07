@@ -41,7 +41,9 @@ class TankEnvirolment:
         self.num_states = len(self.state_table)
         self.num_actions = len(self.action_table)
 
-        self.ModbusClient = ModbusClient(comm="tcp", host="192.168.68.150", port=502);
+        modbus_host = os.environ.get("MODBUS_HOST", "localhost")        
+        modbus_port = os.environ.get("MODBUS_PORT", 502)
+        self.ModbusClient = ModbusClient(comm="tcp", host=modbus_host, port=modbus_port);      
 
     def System_To_RL_State(self):
         state_x1 = np.round(self.x1 - self.ref1, 2)
