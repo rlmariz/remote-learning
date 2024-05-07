@@ -64,8 +64,8 @@ function createClient(socket) {
 }
 
 const options = {
-  'host': 'localhost',
-  'port': 502,
+  'host': process.env.MODBUS_HOST || 'localhost',
+  'port': process.env.MODBUS_PORT || 502,
   'retryTime': 1000, // 1s for every retry
   'retryAlways': true // retry even if the connection was closed on purpose
 }
