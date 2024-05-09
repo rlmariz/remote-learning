@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: supervisory
+spec:
+  serviceName: supervisory
+  replicas: 1
+  selector:
+    matchLabels:
+      app: supervisory-app
+  template:
+    metadata:
+      labels:
+        app: supervisory-app
+    spec:
+      containers:
+        - name: supervisory-app
+          image: rlmariz/remote-learning-supervisory:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TZ
+              value: America/Sao_Paulo
+            - name: MODBUS_HOST
+              value: nodered-modbus.default.svc.cluster.local
+            - name: MODBUS_PORT
+              value: '5502'        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: supervisory-service
+spec:
+  selector:
+    app: supervisory-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer

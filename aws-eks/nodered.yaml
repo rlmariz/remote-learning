@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nodered
+spec:
+  serviceName: nodered
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodered-app
+  template:
+    metadata:
+      labels:
+        app: nodered-app
+    spec:
+      containers:
+        - name: nodered-app
+          image: rlmariz/remote-learning-nodered:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1880
+            - containerPort: 5502
+          env:
+            - name: TZ
+              value: America/Sao_Paulo
+            - name: MODBUS_HOST
+              value: nodered-modbus.default.svc.cluster.local
+            - name: MODBUS_PORT
+              value: '5502'                
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodered-modbus
+spec:
+  selector:
+    app: nodered-app
+  ports:
+    - protocol: TCP
+      port: 5502
+      targetPort: 5502
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodered-service
+spec:
+  selector:
+    app: nodered-app
+  ports:
+    - protocol: TCP
+      port: 1880
+      targetPort: 1880
+  type: LoadBalancer
