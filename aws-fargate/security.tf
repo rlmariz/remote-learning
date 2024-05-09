@@ -1,15 +1,13 @@
-# security.tf
-
 # ALB security Group: Edit to restrict access to the application
 resource "aws_security_group" "lb" {
-    name        = "cb-load-balancer-security-group"
-    description = "controls access to the ALB"
+    name        = "remote-learning-load-balancer-security-group"
+    description = "controls access to the load banacer"
     vpc_id      = aws_vpc.main.id
 
     ingress {
         protocol    = "tcp"
-        from_port   = var.app_port
-        to_port     = var.app_port
+        from_port   = 1880
+        to_port     = 1880
         cidr_blocks = ["0.0.0.0/0"]
     }
 
@@ -28,16 +26,16 @@ resource "aws_security_group" "lb" {
     }
 }
 
-# Traffic to the ECS cluster should only come from the ALB
+# Traffic to the ECS cluster should only come from the load balancer
 resource "aws_security_group" "ecs_tasks" {
-    name        = "cb-ecs-tasks-security-group"
-    description = "allow inbound access from the ALB only"
+    name        = "remote-learning-ecs-tasks-security-group"
+    description = "allow inbound access from the load balancer only"
     vpc_id      = aws_vpc.main.id
 
     ingress {
         protocol        = "tcp"
-        from_port       = var.app_port
-        to_port         = var.app_port
+        from_port       = 1880
+        to_port         = 1880
         security_groups = [aws_security_group.lb.id]
     }
 
