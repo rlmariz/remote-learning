@@ -1,0 +1,44 @@
+services:
+  nodered:
+      image: rlmariz/remote-learning-nodered:latest
+      container_name: nodered      
+      hostname: nodered
+      restart: unless-stopped
+      # depends_on:
+      #   - api
+      #   - frontend
+      ports:
+        - 1880:1880
+        - 502:502
+      # links:
+      #   - api:api
+      #   - frontend:frontend
+  supervisory:
+      image: rlmariz/remote-learning-supervisory:latest
+      container_name: supervisory
+      hostname: supervisory
+      restart: unless-stopped
+      ports:
+        - 3000:3000
+      environment:
+        MODBUS_HOST: nodered
+        MODBUS_PORT: 502        
+      depends_on:
+        - nodered
+      links:
+        - nodered:nodered
+  controller:
+      image: rlmariz/remote-learning-controller:latest
+      container_name: controller
+      hostname: controller
+      restart: unless-stopped
+      ports:
+        - 8000:8000
+      environment:
+        MODBUS_HOST: nodered
+        MODBUS_PORT: 502        
+      depends_on:
+        - nodered
+        - supervisory
+      links:
+        - nodered:nodered
