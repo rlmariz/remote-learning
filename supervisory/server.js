@@ -36,18 +36,18 @@ io.on('connection', (socket) => {
             modbusClient.writeFloat(32, data.ref2)
 
         if (data.control_type !== undefined && data.control_type !== null && data.control_type === 'pmc_nn') {
-            modbusClient.writeInt(36,1)
+            modbusClient.writeInt(36, 1)
         }
 
         if (data.control_type !== undefined && data.control_type !== null && data.control_type === 'pmc') {
-            modbusClient.writeInt(36,2)
+            modbusClient.writeInt(36, 2)
         }
 
         if (data.control_type !== undefined && data.control_type !== null && data.control_type === 'rf') {
-            modbusClient.writeInt(36,3)
+            modbusClient.writeInt(36, 3)
         }
 
-        modbusClient.writeInt(37,1)
+        modbusClient.writeInt(37, 1)
 
         io.emit('ref', data)
     });

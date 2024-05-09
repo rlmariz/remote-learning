@@ -33,7 +33,7 @@ function createSocket() {
   });
 
   socket.on('error', function (socket) {
-    console.log('Modbus socket event: error')
+    console.log(`Modbus socket event: error - ${options.host}:${options.port}`)
     modbusConnected = false;
   });
 
