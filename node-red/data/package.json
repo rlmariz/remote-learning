@@ -4,8 +4,8 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "node-red-dashboard": "~3.4.0",
-        "node-red-contrib-remotelearn-intelligentcontrol": "file:../nodes/intelligentcontrol",
-        "node-red-contrib-remotelearn-labcontrol": "file:../nodes/labcontrol"
+        "node-pid-controller": "^1.0.1",
+        "node-red-contrib-modbus": "^5.31.0",
+        "node-red-contrib-remote-learning": "file:../node-red-contrib-remote-learning"
     }
 }

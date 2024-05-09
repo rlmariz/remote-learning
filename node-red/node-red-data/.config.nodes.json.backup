@@ -617,6 +617,17 @@
                 "module": "node-red-contrib-remote-learning",
                 "file": "/data/node_modules/node-red-contrib-remote-learning/sensor.js"
             },
+            "atuador": {
+                "name": "atuador",
+                "types": [
+                    "atuador"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-remote-learning",
+                "file": "/data/node_modules/node-red-contrib-remote-learning/atuador.js"
+            },
             "tanque": {
                 "name": "tanque",
                 "types": [
@@ -638,26 +649,6 @@
                 "user": false,
                 "module": "node-red-contrib-remote-learning",
                 "file": "/data/node_modules/node-red-contrib-remote-learning/pidcontrol.js"
-            },
-            "atuador": {
-                "name": "atuador",
-                "types": [
-                    "atuador"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remote-learning",
-                "file": "/data/node_modules/node-red-contrib-remote-learning/atuador.js"
-            },
-            "transferfunction": {
-                "name": "transferfunction",
-                "types": [],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remote-learning",
-                "file": "/data/node_modules/node-red-contrib-remote-learning/transferfunction.js"
             }
         }
     }

@@ -429,9 +429,9 @@
     },
     "node-red-contrib-modbus": {
         "name": "node-red-contrib-modbus",
-        "version": "5.30.0",
-        "local": false,
-        "user": false,
+        "version": "5.31.0",
+        "local": true,
+        "user": true,
         "nodes": {
             "Modbus-Client": {
                 "name": "Modbus-Client",
@@ -439,10 +439,10 @@
                     "modbus-client"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-client.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-client.js"
             },
             "Modbus-Response": {
                 "name": "Modbus-Response",
@@ -450,10 +450,10 @@
                     "modbus-response"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-response.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-response.js"
             },
             "Modbus-Read": {
                 "name": "Modbus-Read",
@@ -461,10 +461,10 @@
                     "modbus-read"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-read.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-read.js"
             },
             "Modbus-Getter": {
                 "name": "Modbus-Getter",
@@ -472,10 +472,10 @@
                     "modbus-getter"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-getter.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-getter.js"
             },
             "Modbus-Flex-Getter": {
                 "name": "Modbus-Flex-Getter",
@@ -483,10 +483,10 @@
                     "modbus-flex-getter"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-flex-getter.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-getter.js"
             },
             "Modbus-Write": {
                 "name": "Modbus-Write",
@@ -494,10 +494,10 @@
                     "modbus-write"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-write.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-write.js"
             },
             "Modbus-Flex-Write": {
                 "name": "Modbus-Flex-Write",
@@ -505,10 +505,10 @@
                     "modbus-flex-write"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-flex-write.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-write.js"
             },
             "Modbus-Server": {
                 "name": "Modbus-Server",
@@ -516,10 +516,10 @@
                     "modbus-server"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-server.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-server.js"
             },
             "Modbus-Flex-Server": {
                 "name": "Modbus-Flex-Server",
@@ -527,10 +527,10 @@
                     "modbus-flex-server"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-flex-server.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-server.js"
             },
             "Modbus-Queue-Info": {
                 "name": "Modbus-Queue-Info",
@@ -538,10 +538,10 @@
                     "modbus-queue-info"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-queue-info.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-queue-info.js"
             },
             "Modbus-Flex-Connector": {
                 "name": "Modbus-Flex-Connector",
@@ -549,10 +549,10 @@
                     "modbus-flex-connector"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-flex-connector.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-connector.js"
             },
             "Modbus-IO-Config": {
                 "name": "Modbus-IO-Config",
@@ -560,10 +560,10 @@
                     "modbus-io-config"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-io-config.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-io-config.js"
             },
             "Modbus-Response-Filter": {
                 "name": "Modbus-Response-Filter",
@@ -571,10 +571,10 @@
                     "modbus-response-filter"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-response-filter.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-response-filter.js"
             },
             "Modbus-Flex-Sequencer": {
                 "name": "Modbus-Flex-Sequencer",
@@ -582,10 +582,10 @@
                     "modbus-flex-sequencer"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-flex-sequencer.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-sequencer.js"
             },
             "Modbus-Flex-Fc": {
                 "name": "Modbus-Flex-Fc",
@@ -593,18 +593,18 @@
                     "modbus-flex-fc"
                 ],
                 "enabled": true,
-                "local": false,
+                "local": true,
                 "user": false,
                 "module": "node-red-contrib-modbus",
-                "file": "/usr/src/node-red/node_modules/node-red-contrib-modbus/modbus/modbus-flex-fc.js"
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-fc.js"
             }
         }
     },
     "node-red-contrib-remote-learning": {
         "name": "node-red-contrib-remote-learning",
         "version": "1.0.5",
-        "local": true,
-        "user": true,
+        "local": false,
+        "user": false,
         "nodes": {
             "sensor": {
                 "name": "sensor",
@@ -612,10 +612,10 @@
                     "sensor"
                 ],
                 "enabled": true,
-                "local": true,
+                "local": false,
                 "user": false,
                 "module": "node-red-contrib-remote-learning",
-                "file": "/data/node_modules/node-red-contrib-remote-learning/sensor.js"
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/sensor.js"
             },
             "atuador": {
                 "name": "atuador",
@@ -623,10 +623,10 @@
                     "atuador"
                 ],
                 "enabled": true,
-                "local": true,
+                "local": false,
                 "user": false,
                 "module": "node-red-contrib-remote-learning",
-                "file": "/data/node_modules/node-red-contrib-remote-learning/atuador.js"
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/atuador.js"
             },
             "tanque": {
                 "name": "tanque",
@@ -634,10 +634,10 @@
                     "tanque"
                 ],
                 "enabled": true,
-                "local": true,
+                "local": false,
                 "user": false,
                 "module": "node-red-contrib-remote-learning",
-                "file": "/data/node_modules/node-red-contrib-remote-learning/tanque.js"
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/tanque.js"
             },
             "pidcontrol": {
                 "name": "pidcontrol",
@@ -645,10 +645,10 @@
                     "PID control"
                 ],
                 "enabled": true,
-                "local": true,
+                "local": false,
                 "user": false,
                 "module": "node-red-contrib-remote-learning",
-                "file": "/data/node_modules/node-red-contrib-remote-learning/pidcontrol.js"
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/pidcontrol.js"
             }
         }
     }

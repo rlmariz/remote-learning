@@ -1,7 +1,7 @@
 {
     "node-red": {
         "name": "node-red",
-        "version": "3.0.2",
+        "version": "3.1.9",
         "local": false,
         "user": false,
         "nodes": {
@@ -14,7 +14,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/05-junction.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/05-junction.js"
             },
             "inject": {
                 "name": "inject",
@@ -25,7 +25,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/20-inject.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/20-inject.js"
             },
             "debug": {
                 "name": "debug",
@@ -36,7 +36,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/21-debug.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/21-debug.js"
             },
             "complete": {
                 "name": "complete",
@@ -47,7 +47,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/24-complete.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/24-complete.js"
             },
             "catch": {
                 "name": "catch",
@@ -58,7 +58,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/25-catch.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/25-catch.js"
             },
             "status": {
                 "name": "status",
@@ -69,7 +69,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/25-status.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/25-status.js"
             },
             "link": {
                 "name": "link",
@@ -82,7 +82,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/60-link.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/60-link.js"
             },
             "comment": {
                 "name": "comment",
@@ -93,7 +93,18 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/90-comment.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/90-comment.js"
+            },
+            "global-config": {
+                "name": "global-config",
+                "types": [
+                    "global-config"
+                ],
+                "enabled": true,
+                "local": false,
+                "user": false,
+                "module": "node-red",
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/91-global-config.js"
             },
             "unknown": {
                 "name": "unknown",
@@ -104,7 +115,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/common/98-unknown.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/98-unknown.js"
             },
             "function": {
                 "name": "function",
@@ -115,7 +126,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/10-function.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/10-function.js"
             },
             "switch": {
                 "name": "switch",
@@ -126,7 +137,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/10-switch.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/10-switch.js"
             },
             "change": {
                 "name": "change",
@@ -137,7 +148,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/15-change.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/15-change.js"
             },
             "range": {
                 "name": "range",
@@ -148,7 +159,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/16-range.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/16-range.js"
             },
             "template": {
                 "name": "template",
@@ -159,7 +170,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/80-template.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/80-template.js"
             },
             "delay": {
                 "name": "delay",
@@ -170,7 +181,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/89-delay.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/89-delay.js"
             },
             "trigger": {
                 "name": "trigger",
@@ -181,7 +192,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/89-trigger.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/89-trigger.js"
             },
             "exec": {
                 "name": "exec",
@@ -192,7 +203,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/90-exec.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/90-exec.js"
             },
             "rbe": {
                 "name": "rbe",
@@ -203,7 +214,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/function/rbe.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/function/rbe.js"
             },
             "tls": {
                 "name": "tls",
@@ -214,7 +225,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/05-tls.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/05-tls.js"
             },
             "httpproxy": {
                 "name": "httpproxy",
@@ -225,7 +236,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/06-httpproxy.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/06-httpproxy.js"
             },
             "mqtt": {
                 "name": "mqtt",
@@ -238,7 +249,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/10-mqtt.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/10-mqtt.js"
             },
             "httpin": {
                 "name": "httpin",
@@ -250,7 +261,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/21-httpin.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/21-httpin.js"
             },
             "httprequest": {
                 "name": "httprequest",
@@ -261,7 +272,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/21-httprequest.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/21-httprequest.js"
             },
             "websocket": {
                 "name": "websocket",
@@ -275,7 +286,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/22-websocket.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/22-websocket.js"
             },
             "tcpin": {
                 "name": "tcpin",
@@ -288,7 +299,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/31-tcpin.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/31-tcpin.js"
             },
             "udp": {
                 "name": "udp",
@@ -300,7 +311,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/network/32-udp.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/network/32-udp.js"
             },
             "CSV": {
                 "name": "CSV",
@@ -311,7 +322,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/parsers/70-CSV.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/parsers/70-CSV.js"
             },
             "HTML": {
                 "name": "HTML",
@@ -322,7 +333,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/parsers/70-HTML.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/parsers/70-HTML.js"
             },
             "JSON": {
                 "name": "JSON",
@@ -333,7 +344,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/parsers/70-JSON.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/parsers/70-JSON.js"
             },
             "XML": {
                 "name": "XML",
@@ -344,7 +355,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/parsers/70-XML.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/parsers/70-XML.js"
             },
             "YAML": {
                 "name": "YAML",
@@ -355,7 +366,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/parsers/70-YAML.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/parsers/70-YAML.js"
             },
             "split": {
                 "name": "split",
@@ -367,7 +378,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/sequence/17-split.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/sequence/17-split.js"
             },
             "sort": {
                 "name": "sort",
@@ -378,7 +389,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/sequence/18-sort.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/sequence/18-sort.js"
             },
             "batch": {
                 "name": "batch",
@@ -389,7 +400,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/sequence/19-batch.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/sequence/19-batch.js"
             },
             "file": {
                 "name": "file",
@@ -401,7 +412,7 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/storage/10-file.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/storage/10-file.js"
             },
             "watch": {
                 "name": "watch",
@@ -412,317 +423,188 @@
                 "local": false,
                 "user": false,
                 "module": "node-red",
-                "file": "/remote-learning/node-red/node_modules/@node-red/nodes/core/storage/23-watch.js"
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/storage/23-watch.js"
             }
         }
     },
-    "node-red-dashboard": {
-        "name": "node-red-dashboard",
-        "version": "3.4.0",
+    "node-red-contrib-modbus": {
+        "name": "node-red-contrib-modbus",
+        "version": "5.31.0",
         "local": true,
         "user": true,
         "nodes": {
-            "ui_base": {
-                "name": "ui_base",
+            "Modbus-Client": {
+                "name": "Modbus-Client",
                 "types": [
-                    "ui_base"
+                    "modbus-client"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_base.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-client.js"
             },
-            "ui_button": {
-                "name": "ui_button",
+            "Modbus-Response": {
+                "name": "Modbus-Response",
                 "types": [
-                    "ui_button"
+                    "modbus-response"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_button.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-response.js"
             },
-            "ui_dropdown": {
-                "name": "ui_dropdown",
+            "Modbus-Read": {
+                "name": "Modbus-Read",
                 "types": [
-                    "ui_dropdown"
+                    "modbus-read"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_dropdown.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-read.js"
             },
-            "ui_switch": {
-                "name": "ui_switch",
+            "Modbus-Getter": {
+                "name": "Modbus-Getter",
                 "types": [
-                    "ui_switch"
+                    "modbus-getter"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_switch.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-getter.js"
             },
-            "ui_slider": {
-                "name": "ui_slider",
+            "Modbus-Flex-Getter": {
+                "name": "Modbus-Flex-Getter",
                 "types": [
-                    "ui_slider"
+                    "modbus-flex-getter"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_slider.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-getter.js"
             },
-            "ui_numeric": {
-                "name": "ui_numeric",
+            "Modbus-Write": {
+                "name": "Modbus-Write",
                 "types": [
-                    "ui_numeric"
+                    "modbus-write"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_numeric.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-write.js"
             },
-            "ui_text_input": {
-                "name": "ui_text_input",
+            "Modbus-Flex-Write": {
+                "name": "Modbus-Flex-Write",
                 "types": [
-                    "ui_text_input"
+                    "modbus-flex-write"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_text_input.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-write.js"
             },
-            "ui_date_picker": {
-                "name": "ui_date_picker",
+            "Modbus-Server": {
+                "name": "Modbus-Server",
                 "types": [
-                    "ui_date_picker"
+                    "modbus-server"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_date_picker.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-server.js"
             },
-            "ui_colour_picker": {
-                "name": "ui_colour_picker",
+            "Modbus-Flex-Server": {
+                "name": "Modbus-Flex-Server",
                 "types": [
-                    "ui_colour_picker"
+                    "modbus-flex-server"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_colour_picker.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-server.js"
             },
-            "ui_form": {
-                "name": "ui_form",
+            "Modbus-Queue-Info": {
+                "name": "Modbus-Queue-Info",
                 "types": [
-                    "ui_form"
+                    "modbus-queue-info"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_form.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-queue-info.js"
             },
-            "ui_text": {
-                "name": "ui_text",
+            "Modbus-Flex-Connector": {
+                "name": "Modbus-Flex-Connector",
                 "types": [
-                    "ui_text"
+                    "modbus-flex-connector"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_text.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-connector.js"
             },
-            "ui_gauge": {
-                "name": "ui_gauge",
+            "Modbus-IO-Config": {
+                "name": "Modbus-IO-Config",
                 "types": [
-                    "ui_gauge"
+                    "modbus-io-config"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_gauge.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-io-config.js"
             },
-            "ui_chart": {
-                "name": "ui_chart",
+            "Modbus-Response-Filter": {
+                "name": "Modbus-Response-Filter",
                 "types": [
-                    "ui_chart"
+                    "modbus-response-filter"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_chart.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-response-filter.js"
             },
-            "ui_audio": {
-                "name": "ui_audio",
+            "Modbus-Flex-Sequencer": {
+                "name": "Modbus-Flex-Sequencer",
                 "types": [
-                    "ui_audio"
+                    "modbus-flex-sequencer"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_audio.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-sequencer.js"
             },
-            "ui_toast": {
-                "name": "ui_toast",
+            "Modbus-Flex-Fc": {
+                "name": "Modbus-Flex-Fc",
                 "types": [
-                    "ui_toast"
+                    "modbus-flex-fc"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_toast.js"
-            },
-            "ui_ui_control": {
-                "name": "ui_ui_control",
-                "types": [
-                    "ui_ui_control"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_ui_control.js"
-            },
-            "ui_template": {
-                "name": "ui_template",
-                "types": [
-                    "ui_template"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_template.js"
-            },
-            "ui_link": {
-                "name": "ui_link",
-                "types": [
-                    "ui_link"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_link.js"
-            },
-            "ui_tab": {
-                "name": "ui_tab",
-                "types": [
-                    "ui_tab"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_tab.js"
-            },
-            "ui_group": {
-                "name": "ui_group",
-                "types": [
-                    "ui_group"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_group.js"
-            },
-            "ui_spacer": {
-                "name": "ui_spacer",
-                "types": [
-                    "ui_spacer"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-dashboard",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-dashboard/nodes/ui_spacer.js"
+                "module": "node-red-contrib-modbus",
+                "file": "/data/node_modules/node-red-contrib-modbus/modbus/modbus-flex-fc.js"
             }
         }
     },
-    "node-red-contrib-remotelearn-intelligentcontrol": {
-        "name": "node-red-contrib-remotelearn-intelligentcontrol",
-        "version": "1.0.0",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "lower-case": {
-                "name": "lower-case",
-                "types": [
-                    "lower-case"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/lower-case.js"
-            },
-            "spring": {
-                "name": "spring",
-                "types": [
-                    "spring"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/spring.js"
-            },
-            "mass": {
-                "name": "mass",
-                "types": [
-                    "mass"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/mass.js"
-            },
-            "plot": {
-                "name": "plot",
-                "types": [
-                    "plot"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/plot.js"
-            },
-            "transfer-function": {
-                "name": "transfer-function",
-                "types": [
-                    "transfer-function"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remotelearn-intelligentcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-intelligentcontrol/transfer-function.js"
-            }
-        }
-    },
-    "node-red-contrib-remotelearn-labcontrol": {
-        "name": "node-red-contrib-remotelearn-labcontrol",
+    "node-red-contrib-remote-learning": {
+        "name": "node-red-contrib-remote-learning",
         "version": "1.0.5",
-        "local": true,
-        "user": true,
+        "local": false,
+        "user": false,
         "nodes": {
             "sensor": {
                 "name": "sensor",
@@ -730,32 +612,10 @@
                     "sensor"
                 ],
                 "enabled": true,
-                "local": true,
+                "local": false,
                 "user": false,
-                "module": "node-red-contrib-remotelearn-labcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/sensor.js"
-            },
-            "tanque": {
-                "name": "tanque",
-                "types": [
-                    "tanque"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remotelearn-labcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/tanque.js"
-            },
-            "pidcontrol": {
-                "name": "pidcontrol",
-                "types": [
-                    "PID control"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-remotelearn-labcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/pidcontrol.js"
+                "module": "node-red-contrib-remote-learning",
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/sensor.js"
             },
             "atuador": {
                 "name": "atuador",
@@ -763,19 +623,32 @@
                     "atuador"
                 ],
                 "enabled": true,
-                "local": true,
+                "local": false,
                 "user": false,
-                "module": "node-red-contrib-remotelearn-labcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/atuador.js"
+                "module": "node-red-contrib-remote-learning",
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/atuador.js"
             },
-            "transferfunction": {
-                "name": "transferfunction",
-                "types": [],
+            "tanque": {
+                "name": "tanque",
+                "types": [
+                    "tanque"
+                ],
                 "enabled": true,
-                "local": true,
+                "local": false,
                 "user": false,
-                "module": "node-red-contrib-remotelearn-labcontrol",
-                "file": "/remote-learning/node-red/data/node_modules/node-red-contrib-remotelearn-labcontrol/transferfunction.js"
+                "module": "node-red-contrib-remote-learning",
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/tanque.js"
+            },
+            "pidcontrol": {
+                "name": "pidcontrol",
+                "types": [
+                    "PID control"
+                ],
+                "enabled": true,
+                "local": false,
+                "user": false,
+                "module": "node-red-contrib-remote-learning",
+                "file": "/usr/src/node-red/node_modules/node-red-contrib-remote-learning/pidcontrol.js"
             }
         }
     }

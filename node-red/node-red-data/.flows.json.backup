@@ -57,8 +57,9 @@
         "bufferCommands": true,
         "stateLogEnabled": false,
         "queueLogEnabled": false,
-        "tcpHost": "host.docker.internal",
-        "tcpPort": "502",
+        "failureLogEnabled": false,
+        "tcpHost": "${MODBUS_HOST}",
+        "tcpPort": "${MODBUS_PORT}",
         "tcpType": "DEFAULT",
         "serialPort": "/dev/ttyUSB",
         "serialType": "RTU-BUFFERD",
@@ -73,7 +74,10 @@
         "clientTimeout": "1000",
         "reconnectOnTimeout": false,
         "reconnectTimeout": "2000",
-        "parallelUnitIdsAllowed": false
+        "parallelUnitIdsAllowed": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
     },
     {
         "id": "7b4460f816a46442",
@@ -338,8 +342,7 @@
         "y": 380,
         "wires": [
             [
-                "7b4460f816a46442",
-                "16201fe6838f0455"
+                "7b4460f816a46442"
             ]
         ]
     },
@@ -430,30 +433,13 @@
         ]
     },
     {
-        "id": "16201fe6838f0455",
-        "type": "debug",
-        "z": "30eabd99172917aa",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "valveOpen",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 480,
-        "wires": []
-    },
-    {
         "id": "c7284ab24cba9ba9",
         "type": "modbus-server",
         "z": "6d39aa73397318e6",
         "name": "Modbus Server",
         "logEnabled": false,
         "hostname": "",
-        "serverPort": "502",
+        "serverPort": "${MODBUS_PORT}",
         "responseDelay": 100,
         "delayUnit": "ms",
         "coilsBufferSize": 10000,
@@ -1161,7 +1147,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
+        "x": 820,
         "y": 380,
         "wires": [
             [

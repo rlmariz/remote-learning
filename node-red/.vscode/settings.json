@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.npm": true,
+    "node-red-data\\lib": true
+  }
+}

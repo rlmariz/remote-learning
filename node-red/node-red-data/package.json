@@ -5,6 +5,7 @@
     "private": true,
     "dependencies": {
         "node-pid-controller": "^1.0.1",
+        "node-red-contrib-modbus": "^5.31.0",
         "node-red-contrib-remote-learning": "file:../node-red-contrib-remote-learning"
     }
 }
