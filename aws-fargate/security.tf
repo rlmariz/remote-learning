@@ -1,4 +1,4 @@
-# ALB security Group: Edit to restrict access to the application
+# LB security Group: Edit to restrict access to the application
 resource "aws_security_group" "lb" {
     name        = "remote-learning-load-balancer-security-group"
     description = "controls access to the load banacer"

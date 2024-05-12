@@ -34,12 +34,12 @@ resource "aws_ecs_service" "nodered" {
     }
 
     load_balancer {
-        target_group_arn = aws_alb_target_group.nodered.id
+        target_group_arn = aws_lb_target_group.nodered.id
         container_name   = "nodered"
         container_port   = 1880
     }
 
-    depends_on = [aws_alb_listener.nodered, aws_iam_role_policy_attachment.ecs-task-execution-role-policy-attachment]
+    depends_on = [aws_lb_listener.nodered, aws_iam_role_policy_attachment.ecs-task-execution-role-policy-attachment]
 }
 
 resource "aws_ecs_service" "supervisory" {
@@ -56,12 +56,12 @@ resource "aws_ecs_service" "supervisory" {
     }
 
     load_balancer {
-        target_group_arn = aws_alb_target_group.supervisory.id
+        target_group_arn = aws_lb_target_group.supervisory.id
         container_name   = "supervisory"
         container_port   = 3000
     }
 
-    depends_on = [aws_alb_listener.supervisory, aws_iam_role_policy_attachment.ecs-task-execution-role-policy-attachment]
+    depends_on = [aws_lb_listener.supervisory, aws_iam_role_policy_attachment.ecs-task-execution-role-policy-attachment]
 }
 
 resource "aws_ecs_service" "controller" {
@@ -77,5 +77,5 @@ resource "aws_ecs_service" "controller" {
         assign_public_ip = true
     }
 
-    depends_on = [aws_alb_listener.nodered, aws_alb_listener.supervisory, aws_iam_role_policy_attachment.ecs-task-execution-role-policy-attachment]
+    depends_on = [aws_lb_listener.nodered, aws_lb_listener.supervisory, aws_iam_role_policy_attachment.ecs-task-execution-role-policy-attachment]
 }
