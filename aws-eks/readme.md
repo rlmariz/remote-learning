@@ -1,1 +1,1 @@
-aws eks update-kubeconfig --region us-east-2 --name eks-A3Un8au5
+aws eks update-kubeconfig --region us-east-2 --name eks-S41BrD7C
