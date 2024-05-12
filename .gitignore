@@ -347,3 +347,5 @@ override.tf.json
 terraform.rc
 
 # End of https://www.toptal.com/developers/gitignore/api/node,python,terraform
+aws_credentials.txt
+.terraform.lock.hcl
