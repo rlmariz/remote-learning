@@ -1,4 +1,4 @@
-# docker build --no-cache -t rlmariz/remote-learning-supervisory:latest .
+# docker build --no-cache -t rlmariz/remote-learning-supervisory:ts-0.3 .
 # docker run --rm -it -p 8000:8000 -e MODBUS_HOST=192.168.68.150 -e MODBUS_PORT=502 --name remote-learning-supervisory rlmariz/remote-learning-supervisory:latest
 
 # syntax=docker/dockerfile:1

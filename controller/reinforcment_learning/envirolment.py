@@ -30,11 +30,11 @@ class TankEnvirolment:
         self.last_ref2 = self.ref2
 
         self.max_level = 12
-        self.ts = 1
+        self.ts = 0.3
 
         self.controltype = 'pmc_nn'
 
-        self.state_table = list(np.round(np.arange(-self.max_level, self.max_level + 0.01, 0.01), 2))
+        self.state_table = list(np.round(np.arange(-self.max_level, self.max_level + 0.01, 0.01), 2))        
 
         self.action_table = list(np.round(np.arange(0, 1.1, 0.01), 2))
 
@@ -109,7 +109,6 @@ class TankEnvirolment:
 
         return next_s1, next_s2, reward1, reward2, done
 
-
     def get_action(self, a1, a2):
         '''
         Converts RL environment action to Actual system action.
@@ -162,8 +161,5 @@ class TankEnvirolment:
             reward2 = (0.1 - erro) * 10
           else:
             reward2 = 0
-
-        reward1 = abs(self.last_ref1 - self.last_x1) - abs(self.ref1 - self.x1)
-        reward2 = abs(self.last_ref2 - self.last_x2) - abs(self.ref2 - self.x2)
 
         return reward1, reward2

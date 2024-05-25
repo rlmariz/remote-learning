@@ -63,8 +63,8 @@
         "area": "16",
         "maxLevel": "12",
         "startLevel": "0",
-        "integrationInterval": "1000",
-        "intervalUpdate": "1000",
+        "integrationInterval": "300",
+        "intervalUpdate": "300",
         "x": 500,
         "y": 300,
         "wires": [
@@ -116,8 +116,8 @@
         "area": "16",
         "maxLevel": "12",
         "startLevel": "0",
-        "integrationInterval": "1000",
-        "intervalUpdate": "1000",
+        "integrationInterval": "300",
+        "intervalUpdate": "300",
         "x": 580,
         "y": 400,
         "wires": [

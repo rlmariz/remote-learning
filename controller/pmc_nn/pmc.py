@@ -19,11 +19,11 @@ class PMC:
         self.max_level = 12        
         self.k1 = 2
         self.k2 = 1
-        self.ts = 1
+        self.ts = 0.3
         self.vs = 100
         self.horizon = 5
         self.num_data = 10000
-        self.data_name = f"NumData-{self.num_data}_Hor-{self.horizon}_Ts-{self.ts}"
+        self.data_name = f'data-{self.num_data}_hor-{self.horizon}_ts-{self.ts}'
 
         self.data_dir = data_dir
         self.scaler_x_train = self.load_scaler();
@@ -41,7 +41,7 @@ class PMC:
         return model
 
     def load_scaler(self):
-        scaler_x_train = joblib.load(f"{self.data_dir}/DataTrain_Scaler-x_{self.data_name}.pkl")
+        scaler_x_train = joblib.load(f'{self.data_dir}/datatrain_scaler-x_{self.data_name}.pkl')
         return scaler_x_train
 
     def tank_xdot(self, x, qe, valve=100, valve_k = 1):
@@ -138,20 +138,12 @@ class PMC:
         min_vc = 0
 
         best_qe = qe
-        best_vc = vc
-
-        error_nn1, error_nn2, error_nn = self.pmc_error(qe, vc, vs, x1, x2, ref1, ref2)
-        #error_nn1 = error_nn2 = error_nn = 0
-        error_model1, error_model2, error_model = self.pmc_error_modelo(qe, vc, vs, x1, x2, ref1, ref2, horizon)
+        best_vc = vc            
 
         if control_nn:
-            min_error1 = error_nn1
-            min_error2 = error_nn2
-            min_error = error_nn
+            min_error1, min_error2, min_error = self.pmc_error(qe, vc, vs, x1, x2, ref1, ref2)
         else:
-            min_error1 = error_model1
-            min_error2 = error_model2
-            min_error = error_model
+            min_error1, min_error2, min_error = self.pmc_error_modelo(qe, vc, vs, x1, x2, ref1, ref2, horizon)
 
         # Faz um loop com a quantidade num_randactions de ações aleatorias
         for i in range (num_randactions):
@@ -174,21 +166,13 @@ class PMC:
                 action_vc = max_vc
 
             if action_vc < min_vc:
-                action_vc = min_vc
-
-            error_nn1, error_nn2, error_nn = self.pmc_error(action_qe, action_vc, vs, x1, x2, ref1, ref2)            
-            error_model1, error_model2, error_model = self.pmc_error_modelo(action_qe, action_vc, vs, x1, x2, ref1, ref2, horizon)
+                action_vc = min_vc            
 
             if control_nn:
-                error1 = error_nn1
-                error2 = error_nn2
-                error = error_nn
+                error1, error2, error = self.pmc_error(action_qe, action_vc, vs, x1, x2, ref1, ref2)
             else:
-                error1 = error_model1
-                error2 = error_model2
-                error = error_model
+                error1, error2, error = self.pmc_error_modelo(action_qe, action_vc, vs, x1, x2, ref1, ref2, horizon)
 
-            #print([error , min_error, action_qe, action_vc])
             if error < min_error:
                 best_qe = action_qe
                 best_vc = action_vc

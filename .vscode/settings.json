@@ -4,6 +4,10 @@
     ".node-red\\.npm": true,
     "**/node_modules": true,
     "scadalts-data": true,
-    "temp": true
+    "temp": true,
+    "controller\\*__pycache__": true,
+    "controller\\*__pycache__.*": true,
+    "**/__pycache__": true,
+    "**/__pycache__.*": true
   }
 }
